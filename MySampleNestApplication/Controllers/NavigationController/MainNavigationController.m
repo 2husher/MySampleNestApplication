@@ -18,6 +18,7 @@
 #import "NestConnectViewController.h"
 #import "NestAuthManager.h"
 #import "NestControlsViewController.h"
+#import "DevicesTableViewController.h"
 
 @interface MainNavigationController ()
 
@@ -39,8 +40,8 @@
         NestConnectViewController *nestConnectViewController = [[NestConnectViewController alloc] init];
         self.viewControllers = [NSArray arrayWithObject:nestConnectViewController];
     } else {
-        NestControlsViewController *nestControlsViewController = [[NestControlsViewController alloc] init];
-        self.viewControllers = [NSArray arrayWithObject:nestControlsViewController];
+        DevicesTableViewController *devicesTableVC = [[DevicesTableViewController alloc] init];
+        self.viewControllers = [NSArray arrayWithObject:devicesTableVC];
     }
 }
 

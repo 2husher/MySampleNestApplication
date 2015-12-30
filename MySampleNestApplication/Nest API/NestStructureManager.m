@@ -16,6 +16,7 @@
 
 #import "NestStructureManager.h"
 #import "Thermostat.h"
+#import "SmokeAlarm.h"
 #import "NestAuthManager.h"
 #import "FirebaseManager.h"
 
@@ -38,12 +39,18 @@
  */
 - (void)parseStructure:(NSDictionary *)structure
 {
-    NSArray *thermostats = [self thermostatsForStructure:structure];
+//    NSArray *stru
+    NSArray *thermostats   = [self thermostatsForStructure:structure];
+    NSArray *smokeAlarms = [self smokeAlarmsForStructure:structure];
     
     NSMutableDictionary *returnStructure = [[NSMutableDictionary alloc] init];
     
     if (thermostats) {
         [returnStructure setObject:thermostats forKey:@"thermostats"];
+    }
+
+    if (smokeAlarms) {
+        [returnStructure setObject:smokeAlarms forKey:@"smoke_co_alarms"];
     }
     
     [self.delegate structureUpdated:returnStructure];
@@ -70,6 +77,25 @@
         }
     }
     
+    return returnArray;
+}
+
+- (NSArray *)smokeAlarmsForStructure:(NSDictionary *)structure
+{
+    NSString *structureId = [[structure allKeys] objectAtIndex:0];
+    NSArray *smokeAlarmsIds = [[structure objectForKey:structureId] objectForKey:@"smoke_co_alarms"];
+    NSMutableArray *returnArray = [[NSMutableArray alloc] init];
+
+    if (!smokeAlarmsIds || [smokeAlarmsIds count] == 0) {
+        return nil;
+    } else {
+        for (int i = 0; i < [smokeAlarmsIds count]; i++) {
+            SmokeAlarm *newSmokeAlarm = [[SmokeAlarm alloc] init];
+            newSmokeAlarm.smokeAlarmId = [smokeAlarmsIds objectAtIndex:i];
+            [returnArray addObject:smokeAlarmsIds];
+        }
+    }
+
     return returnArray;
 }
 

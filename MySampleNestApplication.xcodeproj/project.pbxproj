@@ -29,6 +29,13 @@
 		17969D931C33FFE400D4FA1B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D921C33FFE400D4FA1B /* libc++.dylib */; };
 		17969D951C34000800D4FA1B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D941C34000800D4FA1B /* CFNetwork.framework */; };
 		17969D971C34006B00D4FA1B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D961C34006B00D4FA1B /* SystemConfiguration.framework */; };
+		17969D9A1C340E0800D4FA1B /* DevicesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D991C340E0800D4FA1B /* DevicesTableViewController.m */; };
+		17969D9E1C3412B600D4FA1B /* ThermostatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */; };
+		17969DA41C341D9C00D4FA1B /* ThermostatsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA31C341D9C00D4FA1B /* ThermostatsTableView.m */; };
+		17969DA71C34316700D4FA1B /* SmokeAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA61C34316700D4FA1B /* SmokeAlarm.m */; };
+		17969DAA1C34405000D4FA1B /* NestSmokeAlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */; };
+		17969DAE1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */; };
+		17969DB21C34439E00D4FA1B /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB11C34439E00D4FA1B /* DetailsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +88,20 @@
 		17969D921C33FFE400D4FA1B /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		17969D941C34000800D4FA1B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		17969D961C34006B00D4FA1B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		17969D981C340E0800D4FA1B /* DevicesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DevicesTableViewController.h; path = Controllers/ThermostatsTableVC/DevicesTableViewController.h; sourceTree = "<group>"; };
+		17969D991C340E0800D4FA1B /* DevicesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DevicesTableViewController.m; path = Controllers/ThermostatsTableVC/DevicesTableViewController.m; sourceTree = "<group>"; };
+		17969D9C1C3412B600D4FA1B /* ThermostatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermostatDetailsViewController.h; path = Controllers/ThermostatDetailsVC/ThermostatDetailsViewController.h; sourceTree = "<group>"; };
+		17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThermostatDetailsViewController.m; path = Controllers/ThermostatDetailsVC/ThermostatDetailsViewController.m; sourceTree = "<group>"; };
+		17969DA21C341D9C00D4FA1B /* ThermostatsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermostatsTableView.h; path = Views/ThermostatsTableView/ThermostatsTableView.h; sourceTree = "<group>"; };
+		17969DA31C341D9C00D4FA1B /* ThermostatsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThermostatsTableView.m; path = Views/ThermostatsTableView/ThermostatsTableView.m; sourceTree = "<group>"; };
+		17969DA51C34316700D4FA1B /* SmokeAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmokeAlarm.h; path = "Nest API/SmokeAlarm.h"; sourceTree = "<group>"; };
+		17969DA61C34316700D4FA1B /* SmokeAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmokeAlarm.m; path = "Nest API/SmokeAlarm.m"; sourceTree = "<group>"; };
+		17969DA81C34405000D4FA1B /* NestSmokeAlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestSmokeAlarmManager.h; path = "Nest API/NestSmokeAlarmManager.h"; sourceTree = "<group>"; };
+		17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestSmokeAlarmManager.m; path = "Nest API/NestSmokeAlarmManager.m"; sourceTree = "<group>"; };
+		17969DAC1C34412500D4FA1B /* SmokeAlarmDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmokeAlarmDetailsViewController.h; path = Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController.h; sourceTree = "<group>"; };
+		17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmokeAlarmDetailsViewController.m; path = Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController.m; sourceTree = "<group>"; };
+		17969DB01C34439E00D4FA1B /* DetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailsView.h; path = Views/DetailsView/DetailsView.h; sourceTree = "<group>"; };
+		17969DB11C34439E00D4FA1B /* DetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailsView.m; path = Views/DetailsView/DetailsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +149,7 @@
 		17969D3B1C33F4AA00D4FA1B /* MySampleNestApplication */ = {
 			isa = PBXGroup;
 			children = (
+				17969DA01C341D3000D4FA1B /* Views */,
 				17969D831C33F98C00D4FA1B /* Categories */,
 				17969D671C33F80500D4FA1B /* Nest API */,
 				17969D621C33F69000D4FA1B /* Controllers */,
@@ -171,6 +193,9 @@
 		17969D621C33F69000D4FA1B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				17969DAB1C3440F300D4FA1B /* SmokeAlarmDetailsVC */,
+				17969D9F1C3412BB00D4FA1B /* ThermostatDetailsVC */,
+				17969D9B1C340E0E00D4FA1B /* ThermostatsTableVC */,
 				17969D631C33F69800D4FA1B /* NavigationController */,
 			);
 			name = Controllers;
@@ -206,6 +231,10 @@
 				17969D791C33F87900D4FA1B /* NestWebViewAuthController.m */,
 				17969D801C33F88500D4FA1B /* Thermostat.h */,
 				17969D811C33F88500D4FA1B /* Thermostat.m */,
+				17969DA51C34316700D4FA1B /* SmokeAlarm.h */,
+				17969DA61C34316700D4FA1B /* SmokeAlarm.m */,
+				17969DA81C34405000D4FA1B /* NestSmokeAlarmManager.h */,
+				17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */,
 			);
 			name = "Nest API";
 			sourceTree = "<group>";
@@ -229,6 +258,60 @@
 				17969D8E1C33FF8900D4FA1B /* Firebase.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		17969D9B1C340E0E00D4FA1B /* ThermostatsTableVC */ = {
+			isa = PBXGroup;
+			children = (
+				17969D981C340E0800D4FA1B /* DevicesTableViewController.h */,
+				17969D991C340E0800D4FA1B /* DevicesTableViewController.m */,
+			);
+			name = ThermostatsTableVC;
+			sourceTree = "<group>";
+		};
+		17969D9F1C3412BB00D4FA1B /* ThermostatDetailsVC */ = {
+			isa = PBXGroup;
+			children = (
+				17969D9C1C3412B600D4FA1B /* ThermostatDetailsViewController.h */,
+				17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */,
+			);
+			name = ThermostatDetailsVC;
+			sourceTree = "<group>";
+		};
+		17969DA01C341D3000D4FA1B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				17969DAF1C34438300D4FA1B /* DetailsView */,
+				17969DA11C341D3700D4FA1B /* ThermostatsTableView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		17969DA11C341D3700D4FA1B /* ThermostatsTableView */ = {
+			isa = PBXGroup;
+			children = (
+				17969DA21C341D9C00D4FA1B /* ThermostatsTableView.h */,
+				17969DA31C341D9C00D4FA1B /* ThermostatsTableView.m */,
+			);
+			name = ThermostatsTableView;
+			sourceTree = "<group>";
+		};
+		17969DAB1C3440F300D4FA1B /* SmokeAlarmDetailsVC */ = {
+			isa = PBXGroup;
+			children = (
+				17969DAC1C34412500D4FA1B /* SmokeAlarmDetailsViewController.h */,
+				17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */,
+			);
+			name = SmokeAlarmDetailsVC;
+			sourceTree = "<group>";
+		};
+		17969DAF1C34438300D4FA1B /* DetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				17969DB01C34439E00D4FA1B /* DetailsView.h */,
+				17969DB11C34439E00D4FA1B /* DetailsView.m */,
+			);
+			name = DetailsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,16 +417,23 @@
 				17969D7B1C33F87900D4FA1B /* NestConnectViewController.m in Sources */,
 				17969D821C33F88500D4FA1B /* Thermostat.m in Sources */,
 				17969D6A1C33F85200D4FA1B /* FirebaseManager.m in Sources */,
+				17969D9E1C3412B600D4FA1B /* ThermostatDetailsViewController.m in Sources */,
 				17969D861C33F9BA00D4FA1B /* UIColor+Custom.m in Sources */,
+				17969D9A1C340E0800D4FA1B /* DevicesTableViewController.m in Sources */,
+				17969DAE1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m in Sources */,
 				17969D891C33F9F200D4FA1B /* Constants.m in Sources */,
 				17969D421C33F4AA00D4FA1B /* AppDelegate.m in Sources */,
 				17969D6D1C33F86B00D4FA1B /* AccessToken.m in Sources */,
+				17969DB21C34439E00D4FA1B /* DetailsView.m in Sources */,
 				17969D7C1C33F87900D4FA1B /* NestControlsViewController.m in Sources */,
 				17969D7A1C33F87900D4FA1B /* NestAuthManager.m in Sources */,
 				17969D3F1C33F4AA00D4FA1B /* main.m in Sources */,
+				17969DAA1C34405000D4FA1B /* NestSmokeAlarmManager.m in Sources */,
+				17969DA71C34316700D4FA1B /* SmokeAlarm.m in Sources */,
 				17969D661C33F74500D4FA1B /* MainNavigationController.m in Sources */,
 				17969D7E1C33F87900D4FA1B /* NestThermostatManager.m in Sources */,
 				17969D7D1C33F87900D4FA1B /* NestStructureManager.m in Sources */,
+				17969DA41C341D9C00D4FA1B /* ThermostatsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +558,7 @@
 				);
 				INFOPLIST_FILE = MySampleNestApplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -483,6 +574,7 @@
 				);
 				INFOPLIST_FILE = MySampleNestApplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
