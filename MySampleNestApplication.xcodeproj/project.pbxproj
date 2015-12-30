@@ -12,6 +12,23 @@
 		17969D4A1C33F4AA00D4FA1B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17969D491C33F4AA00D4FA1B /* Images.xcassets */; };
 		17969D4D1C33F4AA00D4FA1B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17969D4B1C33F4AA00D4FA1B /* LaunchScreen.xib */; };
 		17969D591C33F4AA00D4FA1B /* MySampleNestApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D581C33F4AA00D4FA1B /* MySampleNestApplicationTests.m */; };
+		17969D661C33F74500D4FA1B /* MainNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D651C33F74500D4FA1B /* MainNavigationController.m */; };
+		17969D6A1C33F85200D4FA1B /* FirebaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D691C33F85200D4FA1B /* FirebaseManager.m */; };
+		17969D6D1C33F86B00D4FA1B /* AccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D6C1C33F86B00D4FA1B /* AccessToken.m */; };
+		17969D7A1C33F87900D4FA1B /* NestAuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D6F1C33F87900D4FA1B /* NestAuthManager.m */; };
+		17969D7B1C33F87900D4FA1B /* NestConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D711C33F87900D4FA1B /* NestConnectViewController.m */; };
+		17969D7C1C33F87900D4FA1B /* NestControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D731C33F87900D4FA1B /* NestControlsViewController.m */; };
+		17969D7D1C33F87900D4FA1B /* NestStructureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D751C33F87900D4FA1B /* NestStructureManager.m */; };
+		17969D7E1C33F87900D4FA1B /* NestThermostatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D771C33F87900D4FA1B /* NestThermostatManager.m */; };
+		17969D7F1C33F87900D4FA1B /* NestWebViewAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D791C33F87900D4FA1B /* NestWebViewAuthController.m */; };
+		17969D821C33F88500D4FA1B /* Thermostat.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D811C33F88500D4FA1B /* Thermostat.m */; };
+		17969D861C33F9BA00D4FA1B /* UIColor+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D851C33F9BA00D4FA1B /* UIColor+Custom.m */; };
+		17969D891C33F9F200D4FA1B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D881C33F9F200D4FA1B /* Constants.m */; };
+		17969D8F1C33FF8900D4FA1B /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D8E1C33FF8900D4FA1B /* Firebase.framework */; };
+		17969D911C33FFD600D4FA1B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D901C33FFD600D4FA1B /* libicucore.dylib */; };
+		17969D931C33FFE400D4FA1B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D921C33FFE400D4FA1B /* libc++.dylib */; };
+		17969D951C34000800D4FA1B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D941C34000800D4FA1B /* CFNetwork.framework */; };
+		17969D971C34006B00D4FA1B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D961C34006B00D4FA1B /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +52,35 @@
 		17969D521C33F4AA00D4FA1B /* MySampleNestApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MySampleNestApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17969D571C33F4AA00D4FA1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17969D581C33F4AA00D4FA1B /* MySampleNestApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySampleNestApplicationTests.m; sourceTree = "<group>"; };
+		17969D641C33F74500D4FA1B /* MainNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainNavigationController.h; path = Controllers/NavigationController/MainNavigationController.h; sourceTree = "<group>"; };
+		17969D651C33F74500D4FA1B /* MainNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainNavigationController.m; path = Controllers/NavigationController/MainNavigationController.m; sourceTree = "<group>"; };
+		17969D681C33F85200D4FA1B /* FirebaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseManager.h; path = "Nest API/FirebaseManager.h"; sourceTree = "<group>"; };
+		17969D691C33F85200D4FA1B /* FirebaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseManager.m; path = "Nest API/FirebaseManager.m"; sourceTree = "<group>"; };
+		17969D6B1C33F86B00D4FA1B /* AccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccessToken.h; path = "Nest API/AccessToken.h"; sourceTree = "<group>"; };
+		17969D6C1C33F86B00D4FA1B /* AccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccessToken.m; path = "Nest API/AccessToken.m"; sourceTree = "<group>"; };
+		17969D6E1C33F87900D4FA1B /* NestAuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestAuthManager.h; path = "Nest API/NestAuthManager.h"; sourceTree = "<group>"; };
+		17969D6F1C33F87900D4FA1B /* NestAuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestAuthManager.m; path = "Nest API/NestAuthManager.m"; sourceTree = "<group>"; };
+		17969D701C33F87900D4FA1B /* NestConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestConnectViewController.h; path = "Nest API/NestConnectViewController.h"; sourceTree = "<group>"; };
+		17969D711C33F87900D4FA1B /* NestConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestConnectViewController.m; path = "Nest API/NestConnectViewController.m"; sourceTree = "<group>"; };
+		17969D721C33F87900D4FA1B /* NestControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestControlsViewController.h; path = "Nest API/NestControlsViewController.h"; sourceTree = "<group>"; };
+		17969D731C33F87900D4FA1B /* NestControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestControlsViewController.m; path = "Nest API/NestControlsViewController.m"; sourceTree = "<group>"; };
+		17969D741C33F87900D4FA1B /* NestStructureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestStructureManager.h; path = "Nest API/NestStructureManager.h"; sourceTree = "<group>"; };
+		17969D751C33F87900D4FA1B /* NestStructureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestStructureManager.m; path = "Nest API/NestStructureManager.m"; sourceTree = "<group>"; };
+		17969D761C33F87900D4FA1B /* NestThermostatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestThermostatManager.h; path = "Nest API/NestThermostatManager.h"; sourceTree = "<group>"; };
+		17969D771C33F87900D4FA1B /* NestThermostatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestThermostatManager.m; path = "Nest API/NestThermostatManager.m"; sourceTree = "<group>"; };
+		17969D781C33F87900D4FA1B /* NestWebViewAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestWebViewAuthController.h; path = "Nest API/NestWebViewAuthController.h"; sourceTree = "<group>"; };
+		17969D791C33F87900D4FA1B /* NestWebViewAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestWebViewAuthController.m; path = "Nest API/NestWebViewAuthController.m"; sourceTree = "<group>"; };
+		17969D801C33F88500D4FA1B /* Thermostat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thermostat.h; path = "Nest API/Thermostat.h"; sourceTree = "<group>"; };
+		17969D811C33F88500D4FA1B /* Thermostat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Thermostat.m; path = "Nest API/Thermostat.m"; sourceTree = "<group>"; };
+		17969D841C33F9BA00D4FA1B /* UIColor+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Custom.h"; path = "Categories/UIColor+Custom.h"; sourceTree = "<group>"; };
+		17969D851C33F9BA00D4FA1B /* UIColor+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Custom.m"; path = "Categories/UIColor+Custom.m"; sourceTree = "<group>"; };
+		17969D871C33F9F200D4FA1B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		17969D881C33F9F200D4FA1B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		17969D8E1C33FF8900D4FA1B /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = third_party/Firebase.framework; sourceTree = "<group>"; };
+		17969D901C33FFD600D4FA1B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		17969D921C33FFE400D4FA1B /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		17969D941C34000800D4FA1B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		17969D961C34006B00D4FA1B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +88,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17969D971C34006B00D4FA1B /* SystemConfiguration.framework in Frameworks */,
+				17969D951C34000800D4FA1B /* CFNetwork.framework in Frameworks */,
+				17969D931C33FFE400D4FA1B /* libc++.dylib in Frameworks */,
+				17969D911C33FFD600D4FA1B /* libicucore.dylib in Frameworks */,
+				17969D8F1C33FF8900D4FA1B /* Firebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +109,7 @@
 		17969D301C33F4A900D4FA1B = {
 			isa = PBXGroup;
 			children = (
+				17969D8A1C33FC1E00D4FA1B /* Frameworks */,
 				17969D3B1C33F4AA00D4FA1B /* MySampleNestApplication */,
 				17969D551C33F4AA00D4FA1B /* MySampleNestApplicationTests */,
 				17969D3A1C33F4AA00D4FA1B /* Products */,
@@ -76,8 +128,13 @@
 		17969D3B1C33F4AA00D4FA1B /* MySampleNestApplication */ = {
 			isa = PBXGroup;
 			children = (
+				17969D831C33F98C00D4FA1B /* Categories */,
+				17969D671C33F80500D4FA1B /* Nest API */,
+				17969D621C33F69000D4FA1B /* Controllers */,
 				17969D401C33F4AA00D4FA1B /* AppDelegate.h */,
 				17969D411C33F4AA00D4FA1B /* AppDelegate.m */,
+				17969D871C33F9F200D4FA1B /* Constants.h */,
+				17969D881C33F9F200D4FA1B /* Constants.m */,
 				17969D491C33F4AA00D4FA1B /* Images.xcassets */,
 				17969D4B1C33F4AA00D4FA1B /* LaunchScreen.xib */,
 				17969D3C1C33F4AA00D4FA1B /* Supporting Files */,
@@ -109,6 +166,69 @@
 				17969D571C33F4AA00D4FA1B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		17969D621C33F69000D4FA1B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				17969D631C33F69800D4FA1B /* NavigationController */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		17969D631C33F69800D4FA1B /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				17969D641C33F74500D4FA1B /* MainNavigationController.h */,
+				17969D651C33F74500D4FA1B /* MainNavigationController.m */,
+			);
+			name = NavigationController;
+			sourceTree = "<group>";
+		};
+		17969D671C33F80500D4FA1B /* Nest API */ = {
+			isa = PBXGroup;
+			children = (
+				17969D681C33F85200D4FA1B /* FirebaseManager.h */,
+				17969D691C33F85200D4FA1B /* FirebaseManager.m */,
+				17969D6B1C33F86B00D4FA1B /* AccessToken.h */,
+				17969D6C1C33F86B00D4FA1B /* AccessToken.m */,
+				17969D6E1C33F87900D4FA1B /* NestAuthManager.h */,
+				17969D6F1C33F87900D4FA1B /* NestAuthManager.m */,
+				17969D701C33F87900D4FA1B /* NestConnectViewController.h */,
+				17969D711C33F87900D4FA1B /* NestConnectViewController.m */,
+				17969D721C33F87900D4FA1B /* NestControlsViewController.h */,
+				17969D731C33F87900D4FA1B /* NestControlsViewController.m */,
+				17969D741C33F87900D4FA1B /* NestStructureManager.h */,
+				17969D751C33F87900D4FA1B /* NestStructureManager.m */,
+				17969D761C33F87900D4FA1B /* NestThermostatManager.h */,
+				17969D771C33F87900D4FA1B /* NestThermostatManager.m */,
+				17969D781C33F87900D4FA1B /* NestWebViewAuthController.h */,
+				17969D791C33F87900D4FA1B /* NestWebViewAuthController.m */,
+				17969D801C33F88500D4FA1B /* Thermostat.h */,
+				17969D811C33F88500D4FA1B /* Thermostat.m */,
+			);
+			name = "Nest API";
+			sourceTree = "<group>";
+		};
+		17969D831C33F98C00D4FA1B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				17969D841C33F9BA00D4FA1B /* UIColor+Custom.h */,
+				17969D851C33F9BA00D4FA1B /* UIColor+Custom.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		17969D8A1C33FC1E00D4FA1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				17969D961C34006B00D4FA1B /* SystemConfiguration.framework */,
+				17969D941C34000800D4FA1B /* CFNetwork.framework */,
+				17969D921C33FFE400D4FA1B /* libc++.dylib */,
+				17969D901C33FFD600D4FA1B /* libicucore.dylib */,
+				17969D8E1C33FF8900D4FA1B /* Firebase.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,8 +330,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17969D7F1C33F87900D4FA1B /* NestWebViewAuthController.m in Sources */,
+				17969D7B1C33F87900D4FA1B /* NestConnectViewController.m in Sources */,
+				17969D821C33F88500D4FA1B /* Thermostat.m in Sources */,
+				17969D6A1C33F85200D4FA1B /* FirebaseManager.m in Sources */,
+				17969D861C33F9BA00D4FA1B /* UIColor+Custom.m in Sources */,
+				17969D891C33F9F200D4FA1B /* Constants.m in Sources */,
 				17969D421C33F4AA00D4FA1B /* AppDelegate.m in Sources */,
+				17969D6D1C33F86B00D4FA1B /* AccessToken.m in Sources */,
+				17969D7C1C33F87900D4FA1B /* NestControlsViewController.m in Sources */,
+				17969D7A1C33F87900D4FA1B /* NestAuthManager.m in Sources */,
 				17969D3F1C33F4AA00D4FA1B /* main.m in Sources */,
+				17969D661C33F74500D4FA1B /* MainNavigationController.m in Sources */,
+				17969D7E1C33F87900D4FA1B /* NestThermostatManager.m in Sources */,
+				17969D7D1C33F87900D4FA1B /* NestStructureManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +461,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/third_party",
+				);
 				INFOPLIST_FILE = MySampleNestApplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -339,6 +476,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/third_party",
+				);
 				INFOPLIST_FILE = MySampleNestApplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
