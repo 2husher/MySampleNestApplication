@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ThermostatsTableView : UITableView
+@interface DevicesTableView : UITableView
 
 - (void)showLoading;
 - (void)hideLoading;

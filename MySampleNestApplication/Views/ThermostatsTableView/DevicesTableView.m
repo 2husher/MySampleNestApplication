@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 Alex Izotov. All rights reserved.
 //
 
-#import "ThermostatsTableView.h"
+#import "DevicesTableView.h"
 
-@interface ThermostatsTableView ()
+@interface DevicesTableView ()
 
 @property (nonatomic, strong) UIView *loadingView;
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 
 @end
 
-@implementation ThermostatsTableView
+@implementation DevicesTableView
 
 - (id)initWithFrame:(CGRect)frame
 {
