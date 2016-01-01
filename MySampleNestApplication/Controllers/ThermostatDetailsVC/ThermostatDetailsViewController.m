@@ -10,14 +10,24 @@
 #import "DetailsView.h"
 #import "NestThermostatManager.h"
 #import "NestStructureManager.h"
-
+#import "ThermostatDetailsViewController+UIControls.h"
+#import "ThermostatDetailsViewController+Contstraints.h"
 
 @interface ThermostatDetailsViewController ()<NestThermostatManagerDelegate>
 
 @property (nonatomic, strong) DetailsView *detailsView;
 @property (nonatomic, strong) NestThermostatManager *nestThermostatManager;
 
+//@property (nonatomic) BOOL isSlidingSlider;
+
 @end
+
+//#define TEMP_MIN_VALUE 50
+//#define TEMP_MAX_VALUE 90
+//
+//#define FAN_TIMER_SUFFIX_ON @"fan timer (on)"
+//#define FAN_TIMER_SUFFIX_OFF @"fan timer (off)"
+//#define FAN_TIMER_SUFFIX_DISABLED @"fan timer (disabled)"
 
 @implementation ThermostatDetailsViewController
 
@@ -26,51 +36,46 @@
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
-    [self setupThermostatNameLongLabel];
-    [self setupThermostatNameLongLabelConstraints];
+    [self setupNameLongLabel];
+    [self setupNameLongLabelConstraints];
 
-    [self setupDetailsView];
+    [self setupCurrentTemperatureLabel];
+    [self setupCurrentTemperatureLabelConstraints];
+
+    [self setupCurrentTemperatureValueLabel];
+    [self setupCurrentTemperatureValueLabelConstraints];
+
+    [self setupTargetTemperatureLabel];
+    [self setupTargetTemperatureLabelConstraints];
+
+    [self setupTargetTemperatureValueLabel];
+    [self setupTargetTemperatureSlider];
+    [self setupTargetTemperatureValueLabelAndSliderConstraints];
+
+    [self setupFanTimerLabel];
+    [self setupFanTimerSwitch];
+    [self setupFanTimerLabelAndSwitchConstraints];
+
+//    [self setupActivity];
 }
 
-- (void)setupDetailsView
-{
-    self.detailsView = [[DetailsView alloc] initWithFrame:self.view.frame];
-    //[detailsView setDelegate:self];
-    [self.view addSubview:self.detailsView];
-}
+//- (void)setupActivity
+//{
+//    self.activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//
+//    self.activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame), self.activity.frame.size.width, self.activity.frame.size.height)];
+//
+//    self.activity.hidden = YES;
+//    [self.activity startAnimating];
+//
+//    [self.view addSubview:self.activity];
+//}
 
-- (void)setupThermostatNameLongLabel
-{
-    self.thermostatNameLongLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.thermostatNameLongLabel.backgroundColor = [UIColor grayColor];
-    self.thermostatNameLongLabel.text = @"Word:";
-    [self.thermostatNameLongLabel sizeToFit];
-    [self.view addSubview:self.thermostatNameLongLabel];
-}
-
-- (void)setupThermostatNameLongLabelConstraints
-{
-    self.thermostatNameLongLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    id topGuide = self.topLayoutGuide;
-    NSDictionary *nameMap = @{ @"topGuide" : topGuide,
-                               @"nameLongLable" : self.thermostatNameLongLabel };
-
-    NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-50-[nameLongLable]"
-                                            options:0
-                                            metrics:nil
-                                              views:nameMap];
-    [self.view addConstraints:verticalConstraints];
-
-    NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLongLable]-|"
-                                            options:0
-                                            metrics:nil
-                                              views:nameMap];
-    [self.view addConstraints:horizontalConstraints];
-}
-
+//- (void)setupDetailsView
+//{
+//    self.detailsView = [[DetailsView alloc] initWithFrame:self.view.frame];
+//    [self.view addSubview:self.detailsView];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,16 +88,17 @@
     [self subscribeToThermostat:self.thermostatItem];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)subscribeToThermostat:(Thermostat *)thermostat
 {
     if (thermostat)
     {
-        [self.detailsView showLoading];
+//        self.activity.hidden = NO;
+//        [self.activity startAnimating];
 
         [self.nestThermostatManager beginSubscriptionForThermostat:thermostat];
     }
@@ -102,17 +108,69 @@
 
 - (void)thermostatValuesChanged:(Thermostat *)thermostat
 {
-    [self.detailsView hideLoading];
+//    [self.activity stopAnimating];
+//    self.activity.hidden = YES;
 
-//    if ([thermostat.thermostatId isEqualToString:[self.currentThermostat thermostatId]]) {
     [self updateViewWithThermostat:thermostat];
-//    }
-
 }
 
 - (void)updateViewWithThermostat:(Thermostat *)thermostat
 {
-    self.thermostatNameLongLabel.text = thermostat.nameLong;
+    self.nameLongLabel.text = thermostat.nameLong;
+    self.currentTemperatureValueLabel.text = [NSString stringWithFormat:@"%lu", thermostat.ambientTemperatureF];
+    self.targetTemperatureValueLabel.text = [NSString stringWithFormat:@"%lu", thermostat.targetTemperatureF];
+//    [self equalizeSlider];
+
+//    if (thermostat.hasFan)
+//    {
+//        self.fanTimerSwitch.enabled = YES;
+//        self.fanTimerSwitch.on = thermostat.fanTimerActive;
+//
+//        if (thermostat.fanTimerActive)
+//        {
+//            self.fanTimerLabel.text = FAN_TIMER_SUFFIX_ON;
+//        }
+//        else
+//        {
+//            self.fanTimerLabel.text = FAN_TIMER_SUFFIX_OFF;
+//        }
+//    }
+//    else
+//    {
+//        self.fanTimerSwitch.enabled = NO;
+//        self.fanTimerLabel.text = FAN_TIMER_SUFFIX_DISABLED;
+//    }
 }
+
+//- (void)equalizeSlider
+//{
+//    int range = (TEMP_MAX_VALUE - TEMP_MIN_VALUE);
+//    int relative = (int)self.targetTemperatureValueLabel - TEMP_MIN_VALUE;
+//    float percent = (float)relative/(float)range;
+//
+// //   if (!self.isSlidingSlider) {
+//        [self animateSliderToValue:percent];
+// //   }
+//}
+
+//- (void)animateSliderToValue:(float)value
+//{
+//    [UIView animateWithDuration:.5 animations:^{
+//        [self.targetTemperatureSlider setValue:value animated:YES];
+//    } completion:^(BOOL finished) {
+//
+//    }];
+//}
+//
+//- (void)sliderMoving:(UISlider *)sender
+//{
+//    self.isSlidingSlider = YES;
+//}
+//
+//- (void)fanDidSwitch:(UISwitch *)sender
+//{
+//    [self.currentThermostat setFanTimerActive:sender.isOn];
+//    [self saveThermostatChange];
+//}
 
 @end
