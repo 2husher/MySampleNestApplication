@@ -10,12 +10,12 @@
 
 @class ThermostatDetailsViewController;
 @class SmokeAlarmDetailsViewController;
-@class ThermostatsTableView;
+@class DevicesTableView;
 
 @interface DevicesTableViewController : UIViewController
 
 @property (nonatomic, strong) ThermostatDetailsViewController *thermostatDetailsVC;
 @property (nonatomic, strong) SmokeAlarmDetailsViewController *smokeAlarmDetailsVC;
-@property (nonatomic, strong) ThermostatsTableView *tableView;
+@property (nonatomic, strong) DevicesTableView *tableView;
 
 @end

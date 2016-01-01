@@ -12,22 +12,14 @@
 #import "NestThermostatManager.h"
 #import "NestSmokeAlarmManager.h"
 #import "NestStructureManager.h"
-#import "ThermostatsTableView.h"
+#import "DevicesTableView.h"
 
 static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 
 @interface DevicesTableViewController () <UITableViewDataSource, UITableViewDelegate, NestStructureManagerDelegate>
 
-//@property (nonatomic, strong) Thermostat *currentThermostat;
-//@property (nonatomic, strong) SmokeAlarm *currentSmokeAlarm;
-
-//@property (nonatomic, strong) NestThermostatManager *nestThermostatManager;
 @property (nonatomic, strong) NestStructureManager *nestStructureManager;
-
 @property (nonatomic, strong) NSDictionary *currentStructure;
-
-//@property (nonatomic, strong) NSMutableArray *allThermostats;
-
 @property (nonatomic) NSInteger numberOfThermostats;
 @property (nonatomic) NSInteger numberOfSmokeAlarms;
 
@@ -38,35 +30,28 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 - (void)loadView
 {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.title = @"Thermostats";
-
-//    self.allThermostats = [[NSMutableArray alloc] init];
+    self.title = @"Devices";
 
     self.nestStructureManager = [[NestStructureManager alloc] init];
     self.nestStructureManager.delegate = self;
     [self.nestStructureManager initialize];
 
- //   self.nestThermostatManager = [[NestThermostatManager alloc] init];
- //   [self.nestThermostatManager setDelegate:self];
-
     [self setupTableView];
-
     [self.tableView showLoading];
 }
 
 - (void)setupTableView
 {
-    self.tableView = [[ThermostatsTableView alloc] initWithFrame:self.view.frame];
+    self.tableView = [[DevicesTableView alloc] initWithFrame:self.view.frame];
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:TableViewCellIdentifier];
-    //self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
@@ -149,12 +134,6 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
     {
         cell.textLabel.text = [NSString stringWithFormat:@"Smoke Alarm #%lu", indexPath.row];
     }
-
-//    Thermostat *thermostat = (Thermostat *)self.allThermostats[indexPath.row];
-//    if (thermostat)
-//    {
-//        cell.textLabel.text = thermostat.nameLong;
-//    }
 }
 
 #pragma mark - Table view delegate
@@ -167,79 +146,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
         self.thermostatDetailsVC = [[ThermostatDetailsViewController alloc] init];
         self.thermostatDetailsVC.thermostatItem = [[self.currentStructure objectForKey:@"thermostats"]
                                                    objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:self.thermostatDetailsVC
+                                             animated:YES];
     }
     else if (indexPath.section == 1)
     {
         self.smokeAlarmDetailsVC = [[SmokeAlarmDetailsViewController alloc] init];
         self.smokeAlarmDetailsVC.smokeAlarmItem = [[self.currentStructure objectForKey:@"smoke_co_alarms"]
                                                    objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:self.smokeAlarmDetailsVC
+                                             animated:YES];
     }
-
-    [self.navigationController pushViewController:self.thermostatDetailsVC
-                                         animated:YES];
 }
-
-#pragma mark - Private Methods
-
-//- (void)subscribeToThermostat:(Thermostat *)thermostat
-//{
-//    // See if the structure has any thermostats --
-//    if (thermostat) {
-//
-//        // Update the current thermostats
-//        //self.currentThermostat = thermostat;
-//
-//        [self.tableView showLoading];
-//
-//        // Load information for just the first thermostat
-//        [self.nestThermostatManager beginSubscriptionForThermostat:thermostat];
-//    }
-//}
-
-//#pragma mark - NestThermostatManagerDelegate Methods
-//
-///**
-// * Called from NestThermostatManagerDelegate, lets us know thermostat
-// * information has been updated online.
-// * @param thermostat The updated thermostat object.
-// */
-//- (void)thermostatValuesChanged:(Thermostat *)thermostat
-//{
-////    if ([thermostat.thermostatId isEqualToString:[self.currentThermostat thermostatId]]) {
-//        [self.tableView hideLoading];
-//        [self.tableView reloadData];
-//    //    [self.thermostatView updateWithThermostat:thermostat];
-////    }
-//
-//}
-
-//- (UILabel *) headerLabelWithTitle:(NSString *)paramTitle
-//{
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-//    label.text = paramTitle;
-//    label.backgroundColor = [UIColor clearColor];
-//    [label sizeToFit];
-//    return label;
-//}
-//
-//- (UIView *) tableView:(UITableView *)tableView
-//viewForHeaderInSection:(NSInteger)section
-//{
-//    if (section == 0)
-//    {
-//        return [self headerLabelWithTitle:@"Thermostats section"];
-//    }
-//    else if (section == 1)
-//    {
-//        return [self headerLabelWithTitle:@"Cmoke alarms section"];
-//    }
-//    return nil;
-//}
-//
-//- (CGFloat) tableView:(UITableView *)tableView
-//heightForHeaderInSection:(NSInteger)section
-//{
-//    return 30.0f;
-//}
 
 @end
