@@ -9,8 +9,6 @@
 #import "DevicesTableViewController.h"
 #import "ThermostatDetailsViewController.h"
 #import "SmokeAlarmDetailsViewController.h"
-#import "NestThermostatManager.h"
-#import "NestSmokeAlarmManager.h"
 #import "NestStructureManager.h"
 #import "DevicesTableView.h"
 
@@ -31,19 +29,19 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"Devices";
+
+    [self setupTableView];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.title = @"Devices";
-
     self.nestStructureManager = [[NestStructureManager alloc] init];
     self.nestStructureManager.delegate = self;
     [self.nestStructureManager initialize];
 
-    [self setupTableView];
     [self.tableView showLoading];
 }
 
@@ -119,13 +117,6 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
             forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
-}
-
-- (void)configureCell:(UITableViewCell *)cell
-          atIndexPath:(NSIndexPath *)indexPath
-{
     if (indexPath.section == 0)
     {
         cell.textLabel.text = [NSString stringWithFormat:@"Thermostat #%lu", indexPath.row];
@@ -134,6 +125,7 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
     {
         cell.textLabel.text = [NSString stringWithFormat:@"Smoke Alarm #%lu", indexPath.row];
     }
+    return cell;
 }
 
 #pragma mark - Table view delegate
