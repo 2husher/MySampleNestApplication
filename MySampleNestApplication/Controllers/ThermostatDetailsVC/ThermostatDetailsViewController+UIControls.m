@@ -13,7 +13,7 @@
 - (void)setupNameLongLabel
 {
     self.nameLongLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.nameLongLabel.backgroundColor = [UIColor grayColor];
+//    self.nameLongLabel.backgroundColor = [UIColor grayColor];
     self.nameLongLabel.text = @"Thermostat name";
     [self.nameLongLabel sizeToFit];
     [self.view addSubview:self.nameLongLabel];
@@ -21,57 +21,62 @@
 
 - (void)setupCurrentTemperatureValueLabel
 {
-    self.currentTemperatureValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.currentTemperatureValueLabel.backgroundColor = [UIColor grayColor];
-    self.currentTemperatureValueLabel.text = @"XX";
-    [self.currentTemperatureValueLabel sizeToFit];
-    [self.view addSubview:self.currentTemperatureValueLabel];
+    self.currentTempValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//    self.currentTempValueLabel.backgroundColor = [UIColor grayColor];
+    self.currentTempValueLabel.text = @"XXXX";
+    [self.currentTempValueLabel sizeToFit];
+    [self.view addSubview:self.currentTempValueLabel];
 }
 
 - (void)setupCurrentTemperatureLabel
 {
-    self.currentTemperatureLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.currentTemperatureLabel.backgroundColor = [UIColor grayColor];
-    self.currentTemperatureLabel.text = @"Current temperature";
-    [self.currentTemperatureLabel sizeToFit];
-    [self.view addSubview:self.currentTemperatureLabel];
+    self.currentTempLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+ //   self.currentTempLabel.backgroundColor = [UIColor grayColor];
+    self.currentTempLabel.text = @"Current temperature";
+    [self.currentTempLabel sizeToFit];
+    [self.view addSubview:self.currentTempLabel];
 }
 
 - (void)setupTargetTemperatureValueLabel
 {
-    self.targetTemperatureValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTemperatureValueLabel.backgroundColor = [UIColor grayColor];
-    self.targetTemperatureValueLabel.text = @"YY";
-    [self.targetTemperatureValueLabel sizeToFit];
-    [self.view addSubview:self.targetTemperatureValueLabel];
+    self.targetTempValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//    self.targetTempValueLabel.backgroundColor = [UIColor grayColor];
+    self.targetTempValueLabel.text = @"YYYY";
+    [self.targetTempValueLabel sizeToFit];
+    [self.view addSubview:self.targetTempValueLabel];
 }
 
 - (void)setupTargetTemperatureLabel
 {
-    self.targetTemperatureLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTemperatureLabel.backgroundColor = [UIColor grayColor];
-    self.targetTemperatureLabel.text = @"Target temperature";
-    [self.targetTemperatureLabel sizeToFit];
-    [self.view addSubview:self.targetTemperatureLabel];
+    self.targetTempLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  //  self.targetTempLabel.backgroundColor = [UIColor grayColor];
+    self.targetTempLabel.text = @"Target temperature";
+    [self.targetTempLabel sizeToFit];
+    [self.view addSubview:self.targetTempLabel];
 }
 
 - (void)setupTargetTemperatureSlider
 {
-    self.targetTemperatureSlider = [[UISlider alloc] initWithFrame:CGRectZero];
-    self.targetTemperatureSlider.minimumValue = 0.0f;
-    self.targetTemperatureSlider.maximumValue = 100.0f;
-    self.targetTemperatureSlider.value = self.targetTemperatureSlider.maximumValue / 2.0f;
+    self.targetTempSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+    self.targetTempSlider.minimumValue = 0.0f;
+    self.targetTempSlider.maximumValue = 1.0f;
+    self.targetTempSlider.value = self.targetTempSlider.maximumValue / 2.0f;
 
-    [self.targetTemperatureSlider addTarget:self
-                    action:@selector(sliderChanged:)
-          forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.targetTemperatureSlider];
+
+
+    [self.targetTempSlider addTarget:self
+                              action:@selector(sliderValueChanged:)
+                    forControlEvents:UIControlEventValueChanged];
+//    [self.targetTempSlider addTarget:self
+//                    action:@selector(sliderChanged:)
+//          forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.targetTempSlider];
 }
 
 - (void)setupFanTimerLabel
 {
     self.fanTimerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.fanTimerLabel.backgroundColor = [UIColor grayColor];
+    //self.fanTimerLabel.backgroundColor = [UIColor grayColor];
     self.fanTimerLabel.text = @"Timer is timer";
     [self.fanTimerLabel sizeToFit];
     [self.view addSubview:self.fanTimerLabel];
@@ -81,7 +86,7 @@
 {
     self.fanTimerSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     [self.fanTimerSwitch addTarget:self
-                        action:@selector(fanDidSwitch:)
+                        action:@selector(fanSwitched:)
               forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.fanTimerSwitch];
 }

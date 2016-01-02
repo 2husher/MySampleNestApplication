@@ -35,10 +35,10 @@
 
 - (void)setupCurrentTemperatureLabelConstraints
 {
-    self.currentTemperatureLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.currentTempLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
     NSDictionary *nameMap = @{ @"nameLongLabel" : self.nameLongLabel,
-                               @"currentTemp" : self.currentTemperatureLabel};
+                               @"currentTemp" : self.currentTempLabel};
 
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongLabel]-50-[currentTemp]"
@@ -57,10 +57,10 @@
 
 - (void)setupCurrentTemperatureValueLabelConstraints
 {
-    self.currentTemperatureValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.currentTempValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
-    NSDictionary *nameMap = @{ @"currentTemp" : self.currentTemperatureLabel,
-                               @"currentTempVal" : self.currentTemperatureValueLabel };
+    NSDictionary *nameMap = @{ @"currentTemp" : self.currentTempLabel,
+                               @"currentTempVal" : self.currentTempValueLabel };
 
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTemp]-[currentTempVal]"
@@ -79,10 +79,10 @@
 
 - (void)setupTargetTemperatureLabelConstraints
 {
-    self.targetTemperatureLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.targetTempLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
-    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTemperatureLabel,
-                               @"currentTempVal" : self.currentTemperatureValueLabel };
+    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempLabel,
+                               @"currentTempVal" : self.currentTempValueLabel };
 
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTempVal]-50-[targetTemp]"
@@ -101,12 +101,13 @@
 
 - (void)setupTargetTemperatureValueLabelAndSliderConstraints
 {
-    self.targetTemperatureValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.targetTemperatureSlider.translatesAutoresizingMaskIntoConstraints = NO;
+    self.targetTempValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.targetTempSlider.translatesAutoresizingMaskIntoConstraints = NO;
 
-    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTemperatureLabel,
-                               @"targetTempVal" : self.targetTemperatureValueLabel,
-                               @"targetSlider" : self.targetTemperatureSlider };
+    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempLabel,
+                               @"targetTempVal" : self.targetTempValueLabel,
+                               @"targetSlider" : self.targetTempSlider };
+    NSDictionary *metrics = @{ @"labelWidth" : @(self.targetTempValueLabel.frame.size.width) };
 
     NSArray *verticalLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[targetTemp]-[targetTempVal]"
@@ -116,10 +117,10 @@
     [self.view addConstraints:verticalLabelConstraints];
 
     NSLayoutConstraint *verticalSliderConstraints =
-    [NSLayoutConstraint constraintWithItem:self.targetTemperatureSlider
+    [NSLayoutConstraint constraintWithItem:self.targetTempSlider
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
-                                    toItem:self.targetTemperatureValueLabel
+                                    toItem:self.targetTempValueLabel
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0f
                                   constant:0.0f];
@@ -127,9 +128,9 @@
     [self.view addConstraints:@[verticalSliderConstraints]];
 
     NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[targetTempVal]-[targetSlider]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[targetTempVal(labelWidth)]-[targetSlider]-|"
                                             options:0
-                                            metrics:nil
+                                            metrics:metrics
                                               views:nameMap];
     [self.view addConstraints:horizontalConstraints];
 }
@@ -140,7 +141,7 @@
     self.fanTimerSwitch.translatesAutoresizingMaskIntoConstraints = NO;
 
     NSDictionary *nameMap = @{ @"fanTimer" : self.fanTimerLabel,
-                               @"targetTempVal" : self.targetTemperatureValueLabel,
+                               @"targetTempVal" : self.targetTempValueLabel,
                                @"fanSwitch" : self.fanTimerSwitch };
 
     NSArray *verticalLabelConstraints =
