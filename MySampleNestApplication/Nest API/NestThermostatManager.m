@@ -26,8 +26,13 @@
 #define HAS_FAN @"has_fan"
 #define TARGET_TEMPERATURE_F @"target_temperature_f"
 #define AMBIENT_TEMPERATURE_F @"ambient_temperature_f"
+#define TARGET_TEMPERATURE_C @"target_temperature_c"
+#define AMBIENT_TEMPERATURE_C @"ambient_temperature_c"
+
 #define NAME_LONG @"name_long"
 #define THERMOSTAT_PATH @"devices/thermostats"
+
+#define TEMPERATURE_SCALE @"temperature_scale"
 
 @implementation NestThermostatManager
 
@@ -51,24 +56,41 @@
  */
 - (void)updateThermostat:(Thermostat *)thermostat forStructure:(NSDictionary *)structure
 {
-    if ([structure objectForKey:AMBIENT_TEMPERATURE_F]) {
+    if ([structure objectForKey:TEMPERATURE_SCALE])
+    {
+        thermostat.temperatureScale = [structure objectForKey:TEMPERATURE_SCALE];
+    }
+    if ([structure objectForKey:AMBIENT_TEMPERATURE_F])
+    {
         thermostat.ambientTemperatureF = [[structure objectForKey:AMBIENT_TEMPERATURE_F] integerValue];
     }
-    if ([structure objectForKey:TARGET_TEMPERATURE_F]) {
+    if ([structure objectForKey:TARGET_TEMPERATURE_F])
+    {
         thermostat.targetTemperatureF = [[structure objectForKey:TARGET_TEMPERATURE_F] integerValue];
     }
-    if ([structure objectForKey:HAS_FAN]) {
+    if ([structure objectForKey:AMBIENT_TEMPERATURE_C])
+    {
+        thermostat.ambientTemperatureC = [[structure objectForKey:AMBIENT_TEMPERATURE_C] floatValue];
+    }
+    if ([structure objectForKey:TARGET_TEMPERATURE_C])
+    {
+        thermostat.targetTemperatureC = [[structure objectForKey:TARGET_TEMPERATURE_C] floatValue];
+    }
+    if ([structure objectForKey:HAS_FAN])
+    {
         thermostat.hasFan = [[structure objectForKey:HAS_FAN] boolValue];
 
     }
-    if ([structure objectForKey:FAN_TIMER_ACTIVE]) {
+    if ([structure objectForKey:FAN_TIMER_ACTIVE])
+    {
         thermostat.fanTimerActive = [[structure objectForKey:FAN_TIMER_ACTIVE] boolValue];
 
     }
-    if ([structure objectForKey:NAME_LONG]) {
+    if ([structure objectForKey:NAME_LONG])
+    {
         thermostat.nameLong = [structure objectForKey:NAME_LONG];
     }
-    
+
     [self.delegate thermostatValuesChanged:thermostat];
 }
 
@@ -81,10 +103,15 @@
 {
     NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
     
-    [values setValue:[NSNumber numberWithInteger:thermostat.targetTemperatureF] forKey:TARGET_TEMPERATURE_F];
-    [values setValue:[NSNumber numberWithBool:thermostat.fanTimerActive] forKey:FAN_TIMER_ACTIVE];
+    [values setValue:[NSNumber numberWithInteger:thermostat.targetTemperatureF]
+              forKey:TARGET_TEMPERATURE_F];
+    [values setValue:[NSNumber numberWithFloat:thermostat.targetTemperatureC]
+              forKey:TARGET_TEMPERATURE_C];
+    [values setValue:[NSNumber numberWithBool:thermostat.fanTimerActive]
+              forKey:FAN_TIMER_ACTIVE];
     
     [[FirebaseManager sharedManager] setValues:values forURL:[NSString stringWithFormat:@"%@/%@/", THERMOSTAT_PATH, thermostat.thermostatId]];
+    NSLog(@"Changes saved");
     
 //    // IMPORTANT to set withLocalEvents to NO
 //    // Read more here: https://www.firebase.com/docs/transactions.html
