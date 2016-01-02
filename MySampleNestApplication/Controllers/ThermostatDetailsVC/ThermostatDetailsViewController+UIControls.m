@@ -60,16 +60,17 @@
     self.targetTempSlider = [[UISlider alloc] initWithFrame:CGRectZero];
     self.targetTempSlider.minimumValue = 0.0f;
     self.targetTempSlider.maximumValue = 1.0f;
-    self.targetTempSlider.value = self.targetTempSlider.maximumValue / 2.0f;
-
-
+   // self.targetTempSlider.value = self.targetTempSlider.maximumValue / 2.0f;
 
     [self.targetTempSlider addTarget:self
                               action:@selector(sliderValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
-//    [self.targetTempSlider addTarget:self
-//                    action:@selector(sliderChanged:)
-//          forControlEvents:UIControlEventValueChanged];
+    [self.targetTempSlider addTarget:self
+                              action:@selector(sliderMoving:)
+                    forControlEvents:UIControlEventTouchDown];
+    [self.targetTempSlider addTarget:self
+                              action:@selector(sliderValueSettled:)
+                    forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.targetTempSlider];
 }
 
