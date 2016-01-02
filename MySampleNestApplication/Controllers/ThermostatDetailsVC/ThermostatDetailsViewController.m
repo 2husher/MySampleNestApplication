@@ -7,27 +7,24 @@
 //
 
 #import "ThermostatDetailsViewController.h"
-#import "DetailsView.h"
-#import "NestThermostatManager.h"
-#import "NestStructureManager.h"
 #import "ThermostatDetailsViewController+UIControls.h"
 #import "ThermostatDetailsViewController+Contstraints.h"
+#import "NestThermostatManager.h"
 
 @interface ThermostatDetailsViewController ()<NestThermostatManagerDelegate>
 
-@property (nonatomic, strong) DetailsView *detailsView;
 @property (nonatomic, strong) NestThermostatManager *nestThermostatManager;
-
-//@property (nonatomic) BOOL isSlidingSlider;
+@property (nonatomic, strong) Thermostat *currentThermostat;
 
 @end
 
-//#define TEMP_MIN_VALUE 50
-//#define TEMP_MAX_VALUE 90
-//
-//#define FAN_TIMER_SUFFIX_ON @"fan timer (on)"
-//#define FAN_TIMER_SUFFIX_OFF @"fan timer (off)"
-//#define FAN_TIMER_SUFFIX_DISABLED @"fan timer (disabled)"
+NSInteger const kMinTargetTempF = 48;
+NSInteger const kMaxTargetTempF = 90;
+NSInteger const kTargetTempStepF = 1;
+
+CGFloat const kMinTargetTempC = 9.0f;
+CGFloat const kMaxTargetTempC = 32.0f;
+CGFloat const kTargetTempStepC = 0.5f;
 
 @implementation ThermostatDetailsViewController
 
@@ -71,12 +68,6 @@
 //    [self.view addSubview:self.activity];
 //}
 
-//- (void)setupDetailsView
-//{
-//    self.detailsView = [[DetailsView alloc] initWithFrame:self.view.frame];
-//    [self.view addSubview:self.detailsView];
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -104,6 +95,12 @@
     }
 }
 
+- (void)fanSwitched:(UISwitch *)sender
+{
+    self.currentThermostat.fanTimerActive = sender.isOn;
+    [self saveThermostatChanges];
+}
+
 #pragma mark - NestThermostatManagerDelegate Methods
 
 - (void)thermostatValuesChanged:(Thermostat *)thermostat
@@ -111,41 +108,131 @@
 //    [self.activity stopAnimating];
 //    self.activity.hidden = YES;
 
-    [self updateViewWithThermostat:thermostat];
+    self.currentThermostat = thermostat;
+
+    self.nameLongLabel.text = thermostat.nameLong;
+
+
+    if ([thermostat.temperatureScale isEqualToString:@"F"])
+    {
+        NSInteger ambientTemperatureF = thermostat.ambientTemperatureF;
+        NSInteger targetTemperatureF  = thermostat.targetTemperatureF;
+        self.currentTempValueLabel.text = [self printFarenheitTemp:ambientTemperatureF];
+        self.targetTempValueLabel.text = [self printFarenheitTemp:targetTemperatureF];
+    }
+    else if ([thermostat.temperatureScale isEqualToString:@"C"])
+    {
+        CGFloat ambientTemperatureC = thermostat.ambientTemperatureC;
+        CGFloat targetTemperatureC  = thermostat.targetTemperatureC;
+        self.currentTempValueLabel.text = [self printCelciumTemp: ambientTemperatureC];
+        self.targetTempValueLabel.text = [self printCelciumTemp:                                          targetTemperatureC];
+    }
+
+
+    if (thermostat.hasFan)
+    {
+        self.fanTimerSwitch.enabled = YES;
+        self.fanTimerSwitch.on = thermostat.fanTimerActive;
+
+        if (thermostat.fanTimerActive)
+        {
+            self.fanTimerLabel.text = @"Fan is on";
+        }
+        else
+        {
+            self.fanTimerLabel.text = @"Fan is off";
+        }
+    }
+    else
+    {
+        self.fanTimerSwitch.enabled = NO;
+        self.fanTimerLabel.text = @"Fan is disabled";
+    }
 }
 
-- (void)updateViewWithThermostat:(Thermostat *)thermostat
+- (NSString *)printCelciumTemp:(CGFloat)temp
 {
-    self.nameLongLabel.text = thermostat.nameLong;
-    self.currentTemperatureValueLabel.text = [NSString stringWithFormat:@"%lu", thermostat.ambientTemperatureF];
-    self.targetTemperatureValueLabel.text = [NSString stringWithFormat:@"%lu", thermostat.targetTemperatureF];
-//    [self equalizeSlider];
+    NSString *celciumTemp = nil;
+    CGFloat deltaTemp = fabs(temp - round(temp));
+    if (deltaTemp == 0)
+    {
+        celciumTemp = [NSString stringWithFormat:@"%0.0lf", temp];
+    }
+    else if (deltaTemp == 0.5)
+    {
+        celciumTemp = [NSString stringWithFormat:@"%0.1lf", temp];
+    }
+    return celciumTemp;
+}
 
-//    if (thermostat.hasFan)
-//    {
-//        self.fanTimerSwitch.enabled = YES;
-//        self.fanTimerSwitch.on = thermostat.fanTimerActive;
-//
-//        if (thermostat.fanTimerActive)
-//        {
-//            self.fanTimerLabel.text = FAN_TIMER_SUFFIX_ON;
-//        }
-//        else
-//        {
-//            self.fanTimerLabel.text = FAN_TIMER_SUFFIX_OFF;
-//        }
-//    }
-//    else
-//    {
-//        self.fanTimerSwitch.enabled = NO;
-//        self.fanTimerLabel.text = FAN_TIMER_SUFFIX_DISABLED;
-//    }
+- (NSString *)printFarenheitTemp:(NSInteger)temp
+{
+    NSString *farenheitTemp = [NSString stringWithFormat:@"%lu", temp];
+    return farenheitTemp;
+}
+
+- (void)saveThermostatChanges
+{
+    [self.nestThermostatManager saveChangesForThermostat:self.currentThermostat];
+//    [self.delegate thermostatInfoChange:self.currentThermostat];
+}
+
+- (CGFloat)getValueBySlider:(UISlider *)slider
+                    fromMin:(CGFloat)min
+                      toMax:(CGFloat)max
+                   withStep:(CGFloat)step
+{
+    // slider 0 1
+    // ||-----|-----||-----|-----||
+    CGFloat delta = step / 2.0;
+    CGFloat currVal = min + (max - min) * slider.value;
+    NSLog(@"currVal: %lf" , currVal);
+    CGFloat roundDown = min - delta;
+    CGFloat roundUp   = min + delta;
+    CGFloat roundValue = -1.0f;
+    for (;;)
+    {
+        roundDown += step;
+        if (roundDown >= currVal)
+        {
+            roundValue = roundDown - delta;
+            break;
+        }
+        roundUp += step;
+        if (roundUp >= currVal)
+        {
+            roundValue = roundUp - delta;
+            break;
+        }
+    }
+    return roundValue;
+}
+
+- (void)sliderValueChanged:(UISlider *)sender
+{
+    if ([self.currentThermostat.temperatureScale isEqualToString:@"F"])
+    {
+        CGFloat tempF = [self getValueBySlider:sender
+                                       fromMin:kMinTargetTempF
+                                         toMax:kMaxTargetTempF
+                                      withStep:kTargetTempStepF];
+        self.targetTempValueLabel.text = [self printFarenheitTemp:tempF];
+    }
+    else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
+    {
+        CGFloat tempC = [self getValueBySlider:sender
+                                       fromMin:kMinTargetTempC
+                                         toMax:kMaxTargetTempC
+                                      withStep:kTargetTempStepC];
+        self.targetTempValueLabel.text = [self printCelciumTemp:tempC];
+    }
+
 }
 
 //- (void)equalizeSlider
 //{
 //    int range = (TEMP_MAX_VALUE - TEMP_MIN_VALUE);
-//    int relative = (int)self.targetTemperatureValueLabel - TEMP_MIN_VALUE;
+//    int relative = (int)self.targetTempValueLabel - TEMP_MIN_VALUE;
 //    float percent = (float)relative/(float)range;
 //
 // //   if (!self.isSlidingSlider) {
@@ -166,11 +253,6 @@
 //{
 //    self.isSlidingSlider = YES;
 //}
-//
-//- (void)fanDidSwitch:(UISwitch *)sender
-//{
-//    [self.currentThermostat setFanTimerActive:sender.isOn];
-//    [self saveThermostatChange];
-//}
+
 
 @end
