@@ -15,14 +15,17 @@
 @property(strong, nonatomic) Thermostat *thermostatItem;
 
 @property (nonatomic, strong) UILabel *nameLongLabel;
-@property (nonatomic, strong) UILabel *currentTemperatureLabel;
-@property (nonatomic, strong) UILabel *currentTemperatureValueLabel;
-@property (nonatomic, strong) UILabel *targetTemperatureLabel;
-@property (nonatomic, strong) UILabel *targetTemperatureValueLabel;
-@property (nonatomic, strong) UISlider *targetTemperatureSlider;
+@property (nonatomic, strong) UILabel *currentTempLabel;
+@property (nonatomic, strong) UILabel *currentTempValueLabel;
+@property (nonatomic, strong) UILabel *targetTempLabel;
+@property (nonatomic, strong) UILabel *targetTempValueLabel;
+@property (nonatomic, strong) UISlider *targetTempSlider;
 @property (nonatomic, strong) UILabel *fanTimerLabel;
 @property (nonatomic, strong) UISwitch *fanTimerSwitch;
 
-@property (nonatomic, strong) UIActivityIndicatorView *activity;
+//@property (nonatomic, strong) UIActivityIndicatorView *activity;
+
+- (void)fanSwitched:(UISwitch *)sender;
+- (void)sliderValueChanged:(UISlider *)sender;
 
 @end
