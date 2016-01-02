@@ -117,15 +117,15 @@ CGFloat const kTargetTempStepC = 0.5f;
     {
         NSInteger ambientTemperatureF = thermostat.ambientTemperatureF;
         NSInteger targetTemperatureF  = thermostat.targetTemperatureF;
-        self.currentTempValueLabel.text = [self printFarenheitTemp:ambientTemperatureF];
-        self.targetTempValueLabel.text = [self printFarenheitTemp:targetTemperatureF];
+        self.currentTempValueLabel.text = [self formatFarenheitTemp:ambientTemperatureF];
+        self.targetTempValueLabel.text = [self formatFarenheitTemp:targetTemperatureF];
     }
     else if ([thermostat.temperatureScale isEqualToString:@"C"])
     {
         CGFloat ambientTemperatureC = thermostat.ambientTemperatureC;
         CGFloat targetTemperatureC  = thermostat.targetTemperatureC;
-        self.currentTempValueLabel.text = [self printCelciumTemp: ambientTemperatureC];
-        self.targetTempValueLabel.text = [self printCelciumTemp:                                          targetTemperatureC];
+        self.currentTempValueLabel.text = [self formatCelciumTemp: ambientTemperatureC];
+        self.targetTempValueLabel.text = [self formatCelciumTemp:                                          targetTemperatureC];
     }
 
 
@@ -150,7 +150,7 @@ CGFloat const kTargetTempStepC = 0.5f;
     }
 }
 
-- (NSString *)printCelciumTemp:(CGFloat)temp
+- (NSString *)formatCelciumTemp:(CGFloat)temp
 {
     NSString *celciumTemp = nil;
     CGFloat deltaTemp = fabs(temp - round(temp));
@@ -165,7 +165,7 @@ CGFloat const kTargetTempStepC = 0.5f;
     return celciumTemp;
 }
 
-- (NSString *)printFarenheitTemp:(NSInteger)temp
+- (NSString *)formatFarenheitTemp:(NSInteger)temp
 {
     NSString *farenheitTemp = [NSString stringWithFormat:@"%lu", temp];
     return farenheitTemp;
@@ -216,7 +216,7 @@ CGFloat const kTargetTempStepC = 0.5f;
                                        fromMin:kMinTargetTempF
                                          toMax:kMaxTargetTempF
                                       withStep:kTargetTempStepF];
-        self.targetTempValueLabel.text = [self printFarenheitTemp:tempF];
+        self.targetTempValueLabel.text = [self formatFarenheitTemp:tempF];
     }
     else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
     {
@@ -224,7 +224,7 @@ CGFloat const kTargetTempStepC = 0.5f;
                                        fromMin:kMinTargetTempC
                                          toMax:kMaxTargetTempC
                                       withStep:kTargetTempStepC];
-        self.targetTempValueLabel.text = [self printCelciumTemp:tempC];
+        self.targetTempValueLabel.text = [self formatCelciumTemp:tempC];
     }
 
 }
