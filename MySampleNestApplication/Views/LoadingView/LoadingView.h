@@ -1,5 +1,5 @@
 //
-//  ThermostatsTableView.h
+//  LoadingView.h
 //  MySampleNestApplication
 //
 //  Created by X on 30/12/15.
@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DevicesTableView : UITableView
+@interface LoadingView : UIView
 
 - (void)showLoading;
 - (void)hideLoading;
-
-- (void)enableView;
 
 @end

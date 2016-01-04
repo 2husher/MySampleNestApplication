@@ -10,7 +10,7 @@
 #import "ThermostatDetailsViewController.h"
 #import "SmokeAlarmDetailsViewController.h"
 #import "NestStructureManager.h"
-#import "DevicesTableView.h"
+#import "LoadingView.h"
 
 static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 
@@ -20,6 +20,7 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 @property (nonatomic, strong) NSDictionary *currentStructure;
 @property (nonatomic) NSInteger numberOfThermostats;
 @property (nonatomic) NSInteger numberOfSmokeAlarms;
+@property (nonatomic, strong) LoadingView *loadingView;
 
 @end
 
@@ -27,11 +28,24 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 
 - (void)loadView
 {
-    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view = [[UIView alloc]
+                 initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"Devices";
 
+
     [self setupTableView];
+    self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
+//    NSLog(@"%@", self.loadingView);
+    [self.view addSubview:self.loadingView];
+//
+//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
+//    [self.view bringSubviewToFront:self.view.subviews[1]];
+//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
+//    [self.view bringSubviewToFront:self.view.subviews[0]];
+//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
+ //   [self.view sendSubviewToBack:self.loadingView];
+
 }
 
 - (void)viewDidLoad
@@ -42,22 +56,17 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
     self.nestStructureManager.delegate = self;
     [self.nestStructureManager initialize];
 
-    [self.tableView showLoading];
+    [self.loadingView showLoading];
 }
 
 - (void)setupTableView
 {
-    self.tableView = [[DevicesTableView alloc] initWithFrame:self.view.frame];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:TableViewCellIdentifier];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - NestStructureManagerDelegate Methods
@@ -75,8 +84,8 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
     {
         self.numberOfSmokeAlarms = [[self.currentStructure objectForKey:@"smoke_co_alarms"] count];
     }
+    [self.loadingView hideLoading];
     [self.tableView reloadData];
-    [self.tableView enableView];
 }
 
 #pragma mark - Table view data source

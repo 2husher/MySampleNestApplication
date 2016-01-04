@@ -10,12 +10,14 @@
 #import "ThermostatDetailsViewController+UIControls.h"
 #import "ThermostatDetailsViewController+Contstraints.h"
 #import "NestThermostatManager.h"
+#import "LoadingView.h"
 
 @interface ThermostatDetailsViewController ()<NestThermostatManagerDelegate>
 
 @property (nonatomic, strong) NestThermostatManager *nestThermostatManager;
 @property (nonatomic, strong) Thermostat *currentThermostat;
 @property (nonatomic) BOOL isSlidingSlider;
+@property (nonatomic, strong) LoadingView *loadingView;
 
 @end
 
@@ -54,20 +56,9 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self setupFanTimerSwitch];
     [self setupFanTimerLabelAndSwitchConstraints];
 
-//    [self setupActivity];
+    self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:self.loadingView];
 }
-
-//- (void)setupActivity
-//{
-//    self.activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//
-//    self.activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame), self.activity.frame.size.width, self.activity.frame.size.height)];
-//
-//    self.activity.hidden = YES;
-//    [self.activity startAnimating];
-//
-//    [self.view addSubview:self.activity];
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,18 +71,11 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self subscribeToThermostat:self.thermostatItem];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)subscribeToThermostat:(Thermostat *)thermostat
 {
     if (thermostat)
     {
-//        self.activity.hidden = NO;
-//        [self.activity startAnimating];
-
+        [self.loadingView showLoading];
         [self.nestThermostatManager beginSubscriptionForThermostat:thermostat];
     }
 }
@@ -106,13 +90,10 @@ CGFloat const kTargetTempStepC = 0.5f;
 
 - (void)thermostatValuesChanged:(Thermostat *)thermostat
 {
-//    [self.activity stopAnimating];
-//    self.activity.hidden = YES;
-
+    [self.loadingView hideLoading];
     self.currentThermostat = thermostat;
 
     self.nameLongLabel.text = thermostat.nameLong;
-
 
     if ([thermostat.temperatureScale isEqualToString:@"F"])
     {
