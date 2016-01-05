@@ -7,6 +7,7 @@
 //
 
 #import "SmokeAlarmDetailsViewController.h"
+#import "SmokeAlarmDetailsViewController+UIControls.h"
 
 @interface SmokeAlarmDetailsViewController ()
 
@@ -18,16 +19,13 @@
 {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+
+    [self setupNameLongLabel];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 @end

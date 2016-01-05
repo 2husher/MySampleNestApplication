@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class SmokeAlarm;
+@class SmokeCoAlarm;
 
 @interface SmokeAlarmDetailsViewController : UIViewController
 
-@property (strong, nonatomic) SmokeAlarm *smokeAlarmItem;
+@property (strong, nonatomic) SmokeCoAlarm *smokeAlarmItem;
+@property (nonatomic, strong) UILabel *nameLongLabel;
 
 @end
