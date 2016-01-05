@@ -31,11 +31,12 @@
 		17969D971C34006B00D4FA1B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17969D961C34006B00D4FA1B /* SystemConfiguration.framework */; };
 		17969D9A1C340E0800D4FA1B /* DevicesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D991C340E0800D4FA1B /* DevicesTableViewController.m */; };
 		17969D9E1C3412B600D4FA1B /* ThermostatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */; };
-		17969DA71C34316700D4FA1B /* SmokeAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA61C34316700D4FA1B /* SmokeAlarm.m */; };
-		17969DAA1C34405000D4FA1B /* NestSmokeAlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */; };
+		17969DA71C34316700D4FA1B /* SmokeCoAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA61C34316700D4FA1B /* SmokeCoAlarm.m */; };
+		17969DAA1C34405000D4FA1B /* NestSmokeCoAlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DA91C34405000D4FA1B /* NestSmokeCoAlarmManager.m */; };
 		17969DAE1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */; };
 		17969DB21C34439E00D4FA1B /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB11C34439E00D4FA1B /* LoadingView.m */; };
 		17969DB51C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB41C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m */; };
+		17C170381C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C170371C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,16 +93,18 @@
 		17969D991C340E0800D4FA1B /* DevicesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DevicesTableViewController.m; path = Controllers/ThermostatsTableVC/DevicesTableViewController.m; sourceTree = "<group>"; };
 		17969D9C1C3412B600D4FA1B /* ThermostatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermostatDetailsViewController.h; path = Controllers/ThermostatDetailsVC/ThermostatDetailsViewController.h; sourceTree = "<group>"; };
 		17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThermostatDetailsViewController.m; path = Controllers/ThermostatDetailsVC/ThermostatDetailsViewController.m; sourceTree = "<group>"; };
-		17969DA51C34316700D4FA1B /* SmokeAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmokeAlarm.h; path = "Nest API/SmokeAlarm.h"; sourceTree = "<group>"; };
-		17969DA61C34316700D4FA1B /* SmokeAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmokeAlarm.m; path = "Nest API/SmokeAlarm.m"; sourceTree = "<group>"; };
-		17969DA81C34405000D4FA1B /* NestSmokeAlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestSmokeAlarmManager.h; path = "Nest API/NestSmokeAlarmManager.h"; sourceTree = "<group>"; };
-		17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestSmokeAlarmManager.m; path = "Nest API/NestSmokeAlarmManager.m"; sourceTree = "<group>"; };
+		17969DA51C34316700D4FA1B /* SmokeCoAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmokeCoAlarm.h; path = "Nest API/SmokeCoAlarm.h"; sourceTree = "<group>"; };
+		17969DA61C34316700D4FA1B /* SmokeCoAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmokeCoAlarm.m; path = "Nest API/SmokeCoAlarm.m"; sourceTree = "<group>"; };
+		17969DA81C34405000D4FA1B /* NestSmokeCoAlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NestSmokeCoAlarmManager.h; path = "Nest API/NestSmokeCoAlarmManager.h"; sourceTree = "<group>"; };
+		17969DA91C34405000D4FA1B /* NestSmokeCoAlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NestSmokeCoAlarmManager.m; path = "Nest API/NestSmokeCoAlarmManager.m"; sourceTree = "<group>"; };
 		17969DAC1C34412500D4FA1B /* SmokeAlarmDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmokeAlarmDetailsViewController.h; path = Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController.h; sourceTree = "<group>"; };
 		17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmokeAlarmDetailsViewController.m; path = Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController.m; sourceTree = "<group>"; };
 		17969DB01C34439E00D4FA1B /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = Views/LoadingView/LoadingView.h; sourceTree = "<group>"; };
 		17969DB11C34439E00D4FA1B /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = Views/LoadingView/LoadingView.m; sourceTree = "<group>"; };
 		17969DB31C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ThermostatDetailsViewController+UIControls.h"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+UIControls.h"; sourceTree = "<group>"; };
 		17969DB41C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ThermostatDetailsViewController+UIControls.m"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+UIControls.m"; sourceTree = "<group>"; };
+		17C170361C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SmokeAlarmDetailsViewController+UIControls.h"; path = "Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController+UIControls.h"; sourceTree = "<group>"; };
+		17C170371C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SmokeAlarmDetailsViewController+UIControls.m"; path = "Controllers/SmokeAlarmDetailsVC/SmokeAlarmDetailsViewController+UIControls.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,14 +230,14 @@
 				17969D751C33F87900D4FA1B /* NestStructureManager.m */,
 				17969D761C33F87900D4FA1B /* NestThermostatManager.h */,
 				17969D771C33F87900D4FA1B /* NestThermostatManager.m */,
+				17969DA81C34405000D4FA1B /* NestSmokeCoAlarmManager.h */,
+				17969DA91C34405000D4FA1B /* NestSmokeCoAlarmManager.m */,
 				17969D781C33F87900D4FA1B /* NestWebViewAuthController.h */,
 				17969D791C33F87900D4FA1B /* NestWebViewAuthController.m */,
 				17969D801C33F88500D4FA1B /* Thermostat.h */,
 				17969D811C33F88500D4FA1B /* Thermostat.m */,
-				17969DA51C34316700D4FA1B /* SmokeAlarm.h */,
-				17969DA61C34316700D4FA1B /* SmokeAlarm.m */,
-				17969DA81C34405000D4FA1B /* NestSmokeAlarmManager.h */,
-				17969DA91C34405000D4FA1B /* NestSmokeAlarmManager.m */,
+				17969DA51C34316700D4FA1B /* SmokeCoAlarm.h */,
+				17969DA61C34316700D4FA1B /* SmokeCoAlarm.m */,
 			);
 			name = "Nest API";
 			sourceTree = "<group>";
@@ -293,6 +296,8 @@
 			children = (
 				17969DAC1C34412500D4FA1B /* SmokeAlarmDetailsViewController.h */,
 				17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */,
+				17C170361C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.h */,
+				17C170371C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.m */,
 			);
 			name = SmokeAlarmDetailsVC;
 			sourceTree = "<group>";
@@ -418,10 +423,11 @@
 				17969D6D1C33F86B00D4FA1B /* AccessToken.m in Sources */,
 				17969DB21C34439E00D4FA1B /* LoadingView.m in Sources */,
 				17969D7C1C33F87900D4FA1B /* NestControlsViewController.m in Sources */,
+				17C170381C3C02290025A068 /* SmokeAlarmDetailsViewController+UIControls.m in Sources */,
 				17969D7A1C33F87900D4FA1B /* NestAuthManager.m in Sources */,
 				17969D3F1C33F4AA00D4FA1B /* main.m in Sources */,
-				17969DAA1C34405000D4FA1B /* NestSmokeAlarmManager.m in Sources */,
-				17969DA71C34316700D4FA1B /* SmokeAlarm.m in Sources */,
+				17969DAA1C34405000D4FA1B /* NestSmokeCoAlarmManager.m in Sources */,
+				17969DA71C34316700D4FA1B /* SmokeCoAlarm.m in Sources */,
 				17969D661C33F74500D4FA1B /* MainNavigationController.m in Sources */,
 				17969DB51C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m in Sources */,
 				17969D7E1C33F87900D4FA1B /* NestThermostatManager.m in Sources */,
