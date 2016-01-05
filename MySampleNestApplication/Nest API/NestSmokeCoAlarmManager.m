@@ -19,10 +19,10 @@ static NSString *const kUiColorState = @"ui_color_state";
 
 @implementation NestSmokeCoAlarmManager
 
-- (void)beginSubscriptionForSmokeCoAlarm:(SmokeCoAlarm *)SmokeCoAlarm
+- (void)beginSubscriptionForSmokeCoAlarm:(SmokeCoAlarm *)smokeCoAlarm
 {
-    [[FirebaseManager sharedManager] addSubscriptionToURL:[NSString stringWithFormat:@"%@/%@/",kSmokeCoAlarmsPath, SmokeCoAlarm.smokeAlarmId] withBlock:^(FDataSnapshot *snapshot) {
-        [self updateSmokeCoAlarm:SmokeCoAlarm forStructure:snapshot.value];
+    [[FirebaseManager sharedManager] addSubscriptionToURL:[NSString stringWithFormat:@"%@/%@/",kSmokeCoAlarmsPath, smokeCoAlarm.smokeAlarmId] withBlock:^(FDataSnapshot *snapshot) {
+        [self updateSmokeCoAlarm:smokeCoAlarm forStructure:snapshot.value];
     }];
 }
 

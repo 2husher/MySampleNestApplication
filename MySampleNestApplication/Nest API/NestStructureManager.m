@@ -92,7 +92,7 @@
         for (int i = 0; i < [smokeAlarmsIds count]; i++) {
             SmokeCoAlarm *newSmokeAlarm = [[SmokeCoAlarm alloc] init];
             newSmokeAlarm.smokeAlarmId = [smokeAlarmsIds objectAtIndex:i];
-            [returnArray addObject:smokeAlarmsIds];
+            [returnArray addObject:newSmokeAlarm];
         }
     }
 
