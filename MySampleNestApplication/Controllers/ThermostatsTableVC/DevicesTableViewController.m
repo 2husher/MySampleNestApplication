@@ -12,14 +12,13 @@
 #import "NestStructureManager.h"
 #import "LoadingView.h"
 
-static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
+static NSString *TableViewCellIdentifier = @"DeviceIdentifier";
 
 @interface DevicesTableViewController () <UITableViewDataSource, UITableViewDelegate, NestStructureManagerDelegate>
 
 @property (nonatomic, strong) NestStructureManager *nestStructureManager;
 @property (nonatomic, strong) NSDictionary *currentStructure;
-@property (nonatomic) NSInteger numberOfThermostats;
-@property (nonatomic) NSInteger numberOfSmokeAlarms;
+@property (nonatomic, strong) NSArray *structureSectionTitles;
 @property (nonatomic, strong) LoadingView *loadingView;
 
 @end
@@ -33,19 +32,9 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"Devices";
 
-
     [self setupTableView];
     self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
-//    NSLog(@"%@", self.loadingView);
     [self.view addSubview:self.loadingView];
-//
-//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
-//    [self.view bringSubviewToFront:self.view.subviews[1]];
-//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
-//    [self.view bringSubviewToFront:self.view.subviews[0]];
-//    NSLog(@"subview[0] = %@\nsubview[1] = %@", self.view.subviews[0], self.view.subviews[1]);
- //   [self.view sendSubviewToBack:self.loadingView];
-
 }
 
 - (void)viewDidLoad
@@ -75,15 +64,7 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 - (void)structureUpdated:(NSDictionary *)structure
 {
     self.currentStructure = structure;
-
-    if ([self.currentStructure objectForKey:@"thermostats"])
-    {
-        self.numberOfThermostats = [[self.currentStructure objectForKey:@"thermostats"] count];
-    }
-    if ([self.currentStructure objectForKey:@"smoke_co_alarms"])
-    {
-        self.numberOfSmokeAlarms = [[self.currentStructure objectForKey:@"smoke_co_alarms"] count];
-    }
+    self.structureSectionTitles = [self.currentStructure allKeys];
     [self.loadingView hideLoading];
     [self.tableView reloadData];
 }
@@ -92,29 +73,21 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([self.currentStructure objectForKey:@"thermostats"] &&
-        [self.currentStructure objectForKey:@"smoke_co_alarms"])
-    {
-        return  2;
-    }
-    else
-    {
-        return 1;
-    }
+    return [self.structureSectionTitles count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView
+titleForHeaderInSection:(NSInteger)section
+{
+    return self.structureSectionTitles[section];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return [[self.currentStructure objectForKey:@"thermostats"] count];
-            break;
-        case 1:
-            return [[self.currentStructure objectForKey:@"smoke_co_alarms"] count];
-            break;
-    }
-    return 0;
+    NSString *sectionTitle = self.structureSectionTitles[section];
+    NSArray *sectionDevices = self.currentStructure[sectionTitle];
+    return [sectionDevices count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -126,14 +99,10 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
             forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-    if (indexPath.section == 0)
-    {
-        cell.textLabel.text = [NSString stringWithFormat:@"Thermostat #%lu", indexPath.row];
-    }
-    else if (indexPath.section == 1)
-    {
-        cell.textLabel.text = [NSString stringWithFormat:@"Smoke Alarm #%lu", indexPath.row];
-    }
+    NSString *sectionTitle = self.structureSectionTitles[indexPath.section];
+    cell.textLabel.text =
+        [NSString stringWithFormat:@"%@ #%lu", sectionTitle, indexPath.row];
+
     return cell;
 }
 
@@ -142,21 +111,18 @@ static NSString *TableViewCellIdentifier = @"SimpleTableIdentifier";
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    NSString *sectionTitle = self.structureSectionTitles[indexPath.section];
+    if ([sectionTitle isEqualToString:@"thermostats"])
     {
         self.thermostatDetailsVC = [[ThermostatDetailsViewController alloc] init];
-        self.thermostatDetailsVC.thermostatItem = [[self.currentStructure objectForKey:@"thermostats"]
-                                                   objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:self.thermostatDetailsVC
-                                             animated:YES];
+        self.thermostatDetailsVC.thermostatItem = self.currentStructure[@"thermostats"][indexPath.row];
+        [self.navigationController pushViewController:self.thermostatDetailsVC animated:YES];
     }
-    else if (indexPath.section == 1)
+    else if ([sectionTitle isEqualToString:@"smoke_co_alarms"])
     {
         self.smokeAlarmDetailsVC = [[SmokeAlarmDetailsViewController alloc] init];
-        self.smokeAlarmDetailsVC.smokeAlarmItem = [[self.currentStructure objectForKey:@"smoke_co_alarms"]
-                                                   objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:self.smokeAlarmDetailsVC
-                                             animated:YES];
+        self.smokeAlarmDetailsVC.smokeAlarmItem = self.currentStructure[@"smoke_co_alarms"][indexPath.row];
+        [self.navigationController pushViewController:self.smokeAlarmDetailsVC animated:YES];
     }
 }
 
