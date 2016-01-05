@@ -8,7 +8,6 @@
 
 #import "ThermostatDetailsViewController.h"
 #import "ThermostatDetailsViewController+UIControls.h"
-#import "ThermostatDetailsViewController+Contstraints.h"
 #import "NestThermostatManager.h"
 #import "LoadingView.h"
 
@@ -37,24 +36,13 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
     [self setupNameLongLabel];
-    [self setupNameLongLabelConstraints];
-
     [self setupCurrentTemperatureLabel];
-    [self setupCurrentTemperatureLabelConstraints];
-
     [self setupCurrentTemperatureValueLabel];
-    [self setupCurrentTemperatureValueLabelConstraints];
-
     [self setupTargetTemperatureLabel];
-    [self setupTargetTemperatureLabelConstraints];
-
     [self setupTargetTemperatureValueLabel];
     [self setupTargetTemperatureSlider];
-    [self setupTargetTemperatureValueLabelAndSliderConstraints];
-
     [self setupFanTimerLabel];
     [self setupFanTimerSwitch];
-    [self setupFanTimerLabelAndSwitchConstraints];
 
     self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.loadingView];

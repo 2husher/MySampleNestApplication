@@ -36,7 +36,6 @@
 		17969DAE1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DAD1C34412500D4FA1B /* SmokeAlarmDetailsViewController.m */; };
 		17969DB21C34439E00D4FA1B /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB11C34439E00D4FA1B /* LoadingView.m */; };
 		17969DB51C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB41C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m */; };
-		17969DB81C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 17969DB71C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +102,6 @@
 		17969DB11C34439E00D4FA1B /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = Views/LoadingView/LoadingView.m; sourceTree = "<group>"; };
 		17969DB31C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ThermostatDetailsViewController+UIControls.h"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+UIControls.h"; sourceTree = "<group>"; };
 		17969DB41C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ThermostatDetailsViewController+UIControls.m"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+UIControls.m"; sourceTree = "<group>"; };
-		17969DB61C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ThermostatDetailsViewController+Contstraints.h"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+Contstraints.h"; sourceTree = "<group>"; };
-		17969DB71C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ThermostatDetailsViewController+Contstraints.m"; path = "Controllers/ThermostatDetailsVC/ThermostatDetailsViewController+Contstraints.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,8 +276,6 @@
 				17969D9D1C3412B600D4FA1B /* ThermostatDetailsViewController.m */,
 				17969DB31C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.h */,
 				17969DB41C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m */,
-				17969DB61C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.h */,
-				17969DB71C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.m */,
 			);
 			name = ThermostatDetailsVC;
 			sourceTree = "<group>";
@@ -429,7 +424,6 @@
 				17969DA71C34316700D4FA1B /* SmokeAlarm.m in Sources */,
 				17969D661C33F74500D4FA1B /* MainNavigationController.m in Sources */,
 				17969DB51C3458DD00D4FA1B /* ThermostatDetailsViewController+UIControls.m in Sources */,
-				17969DB81C3458F500D4FA1B /* ThermostatDetailsViewController+Contstraints.m in Sources */,
 				17969D7E1C33F87900D4FA1B /* NestThermostatManager.m in Sources */,
 				17969D7D1C33F87900D4FA1B /* NestStructureManager.m in Sources */,
 			);
