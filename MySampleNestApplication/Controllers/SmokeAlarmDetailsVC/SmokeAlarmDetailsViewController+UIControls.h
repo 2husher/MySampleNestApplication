@@ -11,5 +11,7 @@
 @interface SmokeAlarmDetailsViewController (UIControls)
 
 - (void)setupNameLongLabel;
+- (void)setupBatteryHealthCaption;
+- (void)setupBatteryHealthValue;
 
 @end
