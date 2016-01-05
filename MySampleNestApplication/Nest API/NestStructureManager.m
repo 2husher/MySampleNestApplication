@@ -16,7 +16,7 @@
 
 #import "NestStructureManager.h"
 #import "Thermostat.h"
-#import "SmokeAlarm.h"
+#import "SmokeCoAlarm.h"
 #import "NestAuthManager.h"
 #import "FirebaseManager.h"
 
@@ -90,7 +90,7 @@
         return nil;
     } else {
         for (int i = 0; i < [smokeAlarmsIds count]; i++) {
-            SmokeAlarm *newSmokeAlarm = [[SmokeAlarm alloc] init];
+            SmokeCoAlarm *newSmokeAlarm = [[SmokeCoAlarm alloc] init];
             newSmokeAlarm.smokeAlarmId = [smokeAlarmsIds objectAtIndex:i];
             [returnArray addObject:smokeAlarmsIds];
         }
