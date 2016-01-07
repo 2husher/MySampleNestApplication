@@ -38,11 +38,19 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self setupNameLongLabel];
     [self setupCurrentTemperatureLabel];
     [self setupCurrentTemperatureValueLabel];
+    [self setupFanTimerLabel];
+    [self setupFanTimerSwitch];
+    [self setupHvacModeSegmentedControl];
     [self setupTargetTemperatureLabel];
     [self setupTargetTemperatureValueLabel];
     [self setupTargetTemperatureSlider];
-    [self setupFanTimerLabel];
-    [self setupFanTimerSwitch];
+    [self setupTargetTempLowCaptionLabel];
+    [self setupTargetTempLowValueLabel];
+    [self setupTargetTempLowSlider];
+    [self setupTargetTempHighCaptionLabel];
+    [self setupTargetTempHighValueLabel];
+    [self setupTargetTempHighSlider];
+
 
     self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.loadingView];
@@ -80,6 +88,10 @@ CGFloat const kTargetTempStepC = 0.5f;
 {
     [self.loadingView hideLoading];
     self.currentThermostat = thermostat;
+
+    NSLog(thermostat.canHeat ? @"can_heat: Yes" : @"can_heat: No");
+    NSLog(thermostat.canCool ? @"can_cool: Yes" : @"can_cool: No");
+    NSLog(thermostat.fanTimerActive ? @"fan_timer_active: Yes" : @"fan_timer_active: No");
 
     self.nameLongLabel.text = thermostat.nameLong;
 
@@ -125,7 +137,33 @@ CGFloat const kTargetTempStepC = 0.5f;
         self.fanTimerSwitch.enabled = NO;
         self.fanTimerLabel.text = @"Fan is disabled";
     }
+
+
+    [self.hvacModeSegmentedControl removeAllSegments];
+    NSMutableArray *hvacMode = [[NSMutableArray alloc] init];
+    if (thermostat.canHeat)
+    {
+        [hvacMode addObject:@"heat"];
+        if (thermostat.canCool)
+        {
+            [hvacMode addObject:@"cool"];
+            [hvacMode addObject:@"heat-cool"];
+        }
+    }
+    else if (thermostat.canCool)
+    {
+        [hvacMode addObject:@"cool"];
+    }
+    [hvacMode addObject:@"off"];
+    NSUInteger len = [hvacMode count];
+    for (NSUInteger i = 0; i < len; i++)
+    {
+        [self.hvacModeSegmentedControl insertSegmentWithTitle:hvacMode[i] atIndex:i animated:NO];
+    }
+    self.hvacModeSegmentedControl.selectedSegmentIndex = [hvacMode indexOfObject:thermostat.hvacMode];
 }
+
+#pragma mark - Other Methods
 
 - (NSString *)formatCelciumTemp:(CGFloat)temp
 {
@@ -191,7 +229,8 @@ CGFloat const kTargetTempStepC = 0.5f;
                                        fromMin:kMinTargetTempF
                                          toMax:kMaxTargetTempF
                                       withStep:kTargetTempStepF];
-        self.targetTempValueLabel.text = [self formatFarenheitTemp:tempF];
+        [self setTempValueLabelForSlider:sender
+                                WithTemp:[self formatFarenheitTemp:tempF]];
     }
     else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
     {
@@ -199,18 +238,48 @@ CGFloat const kTargetTempStepC = 0.5f;
                                        fromMin:kMinTargetTempC
                                          toMax:kMaxTargetTempC
                                       withStep:kTargetTempStepC];
-        self.targetTempValueLabel.text = [self formatCelciumTemp:tempC];
+        [self setTempValueLabelForSlider:sender
+                                WithTemp:[self formatCelciumTemp:tempC]];
     }
-
 }
 
-- (CGFloat)getSliderValue:(Thermostat *)thermostat
+- (void)setTempValueLabelForSlider:(UISlider *)slider
+                          WithTemp:(NSString *)temp
+{
+    if (slider.tag == targetSlider)
+    {
+        self.targetTempValueLabel.text = temp;
+    }
+    else if (slider.tag == targetLowSlider)
+    {
+        self.targetTempLowValueLabel.text = temp;
+    }
+    else if (slider.tag == targetLowSlider)
+    {
+        self.targetTempLowValueLabel.text = temp;
+    }
+}
+
+- (CGFloat)getValueForSlider:(UISlider *)sender
+              withThermostat:(Thermostat *)thermostat
 {
     CGFloat targetTemp  = -1;
     CGFloat sliderValue = -1;
     if ([thermostat.temperatureScale isEqualToString:@"F"])
     {
-        targetTemp = thermostat.targetTemperatureF;
+        if (sender.tag == targetSlider)
+        {
+            targetTemp = thermostat.targetTemperatureF;
+        }
+        else if (sender.tag == targetLowSlider)
+        {
+            targetTemp = thermostat.targetTemp;
+        }
+        else if (sender.tag == targetLowSlider)
+        {
+            self.targetTempLowValueLabel.text = temp;
+        }
+
         sliderValue = [self getSliderValueFromTargetTemp:targetTemp
                                                  withMin:kMinTargetTempF
                                                   andMax:kMaxTargetTempF];
@@ -251,6 +320,56 @@ CGFloat const kTargetTempStepC = 0.5f;
     {
         self.currentThermostat.targetTemperatureC = [self.targetTempValueLabel.text floatValue];
     }
+    [self saveThermostatChanges];
+}
+
+- (void)toggleControls:(UISegmentedControl *)sender
+{
+    NSString *hvacMode = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+    if ([hvacMode isEqualToString:@"heat"] ||
+        [hvacMode isEqualToString:@"cool"])
+    {
+        self.targetTempLabel.hidden = NO;
+        self.targetTempSlider.hidden = NO;
+        self.targetTempValueLabel.hidden = NO;
+
+        self.targetTempLowCaptionLabel.hidden = YES;
+        self.targetTempLowValueLabel.hidden = YES;
+        self.targetTempLowSlider.hidden = YES;
+
+        self.targetTempHighCaptionLabel.hidden = YES;
+        self.targetTempHighSlider.hidden = YES;
+        self.targetTempHighValueLabel.hidden = YES;
+    }
+    else if ([hvacMode isEqualToString:@"heat-cool"])
+    {
+        self.targetTempLabel.hidden = YES;
+        self.targetTempSlider.hidden = YES;
+        self.targetTempValueLabel.hidden = YES;
+
+        self.targetTempLowCaptionLabel.hidden = NO;
+        self.targetTempLowValueLabel.hidden = NO;
+        self.targetTempLowSlider.hidden = NO;
+
+        self.targetTempHighCaptionLabel.hidden = NO;
+        self.targetTempHighSlider.hidden = NO;
+        self.targetTempHighValueLabel.hidden = NO;
+    }
+    else if ([hvacMode isEqualToString:@"off"])
+    {
+        self.targetTempLabel.hidden = YES;
+        self.targetTempSlider.hidden = YES;
+        self.targetTempValueLabel.hidden = YES;
+
+        self.targetTempLowCaptionLabel.hidden = YES;
+        self.targetTempLowValueLabel.hidden = YES;
+        self.targetTempLowSlider.hidden = YES;
+
+        self.targetTempHighCaptionLabel.hidden = YES;
+        self.targetTempHighSlider.hidden = YES;
+        self.targetTempHighValueLabel.hidden = YES;
+    }
+    self.currentThermostat.hvacMode = hvacMode;
     [self saveThermostatChanges];
 }
 
