@@ -50,7 +50,10 @@
 
 - (void)smokeCoAlarmValuesChanged:(SmokeCoAlarm *)smokeCoAlarm
 {
-    
+    [self.loadingView hideLoading];
+
+    self.nameLongLabel.text = smokeCoAlarm.nameLong;
+    self.batteryHealthValue.text = smokeCoAlarm.batteryHealth;
 }
 
 @end
