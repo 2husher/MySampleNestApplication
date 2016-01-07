@@ -27,5 +27,8 @@
 @property (nonatomic) NSInteger targetTemperatureF;
 @property (nonatomic) CGFloat ambientTemperatureC;
 @property (nonatomic) CGFloat targetTemperatureC;
+@property (nonatomic, strong) NSString *hvacMode;
+@property (nonatomic) BOOL canHeat;
+@property (nonatomic) BOOL canCool;
 
 @end
