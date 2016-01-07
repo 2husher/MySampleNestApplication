@@ -13,10 +13,20 @@
 - (void)setupNameLongLabel;
 - (void)setupCurrentTemperatureLabel;
 - (void)setupCurrentTemperatureValueLabel;
+- (void)setupFanTimerLabel;
+- (void)setupFanTimerSwitch;
+- (void)setupHvacModeSegmentedControl;
+
 - (void)setupTargetTemperatureLabel;
 - (void)setupTargetTemperatureValueLabel;
 - (void)setupTargetTemperatureSlider;
-- (void)setupFanTimerLabel;
-- (void)setupFanTimerSwitch;
+
+- (void)setupTargetTempLowCaptionLabel;
+- (void)setupTargetTempLowValueLabel;
+- (void)setupTargetTempLowSlider;
+
+- (void)setupTargetTempHighCaptionLabel;
+- (void)setupTargetTempHighValueLabel;
+- (void)setupTargetTempHighSlider;
 
 @end
