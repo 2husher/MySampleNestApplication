@@ -22,17 +22,20 @@
 
 @end
 
-#define FAN_TIMER_ACTIVE @"fan_timer_active"
-#define HAS_FAN @"has_fan"
-#define TARGET_TEMPERATURE_F @"target_temperature_f"
-#define AMBIENT_TEMPERATURE_F @"ambient_temperature_f"
-#define TARGET_TEMPERATURE_C @"target_temperature_c"
-#define AMBIENT_TEMPERATURE_C @"ambient_temperature_c"
+static NSString *const kThermostatsPath = @"devices/thermostats";
 
-#define NAME_LONG @"name_long"
-#define THERMOSTAT_PATH @"devices/thermostats"
+static NSString *const kFanTimerActive = @"fan_timer_active";
+static NSString *const kHasFan =  @"has_fan";
+static NSString *const kTargetTemperatureF = @"target_temperature_f";
+static NSString *const kAmbientTemperatureF = @"ambient_temperature_f";
+static NSString *const kTargetTemperatureC = @"target_temperature_c";
+static NSString *const kAmbientTemperatureC = @"ambient_temperature_c";
 
-#define TEMPERATURE_SCALE @"temperature_scale"
+static NSString *const kNameLong = @"name_long";
+static NSString *const kTemperatureScale = @"temperature_scale";
+static NSString *const kHvacMode = @"hvac_mode";
+static NSString *const kCanHeat = @"can_heat";
+static NSString *const kCanCool = @"can_cool";
 
 @implementation NestThermostatManager
 
@@ -43,7 +46,7 @@
  */
 - (void)beginSubscriptionForThermostat:(Thermostat *)thermostat
 {
-    [[FirebaseManager sharedManager] addSubscriptionToURL:[NSString stringWithFormat:@"devices/thermostats/%@/", thermostat.thermostatId] withBlock:^(FDataSnapshot *snapshot) {
+    [[FirebaseManager sharedManager] addSubscriptionToURL:[NSString stringWithFormat:@"%@/%@/", kThermostatsPath, thermostat.thermostatId] withBlock:^(FDataSnapshot *snapshot) {
         [self updateThermostat:thermostat forStructure:snapshot.value];
     }];
 }
@@ -56,39 +59,51 @@
  */
 - (void)updateThermostat:(Thermostat *)thermostat forStructure:(NSDictionary *)structure
 {
-    if ([structure objectForKey:TEMPERATURE_SCALE])
+    if (structure[kTemperatureScale])
     {
-        thermostat.temperatureScale = [structure objectForKey:TEMPERATURE_SCALE];
+        thermostat.temperatureScale = structure[kTemperatureScale];
     }
-    if ([structure objectForKey:AMBIENT_TEMPERATURE_F])
+    if (structure[kAmbientTemperatureF])
     {
-        thermostat.ambientTemperatureF = [[structure objectForKey:AMBIENT_TEMPERATURE_F] integerValue];
+        thermostat.ambientTemperatureF = [structure[kAmbientTemperatureF] integerValue];
     }
-    if ([structure objectForKey:TARGET_TEMPERATURE_F])
+    if (structure[kTargetTemperatureF])
     {
-        thermostat.targetTemperatureF = [[structure objectForKey:TARGET_TEMPERATURE_F] integerValue];
+        thermostat.targetTemperatureF = [structure[kTargetTemperatureF]integerValue];
     }
-    if ([structure objectForKey:AMBIENT_TEMPERATURE_C])
+    if (structure[kAmbientTemperatureC])
     {
-        thermostat.ambientTemperatureC = [[structure objectForKey:AMBIENT_TEMPERATURE_C] floatValue];
+        thermostat.ambientTemperatureC = [structure[kAmbientTemperatureC] floatValue];
     }
-    if ([structure objectForKey:TARGET_TEMPERATURE_C])
+    if (structure[kTargetTemperatureC])
     {
-        thermostat.targetTemperatureC = [[structure objectForKey:TARGET_TEMPERATURE_C] floatValue];
+        thermostat.targetTemperatureC = [structure[kTargetTemperatureC] floatValue];
     }
-    if ([structure objectForKey:HAS_FAN])
+    if (structure[kHasFan])
     {
-        thermostat.hasFan = [[structure objectForKey:HAS_FAN] boolValue];
+        thermostat.hasFan = [structure[kHasFan] boolValue];
 
     }
-    if ([structure objectForKey:FAN_TIMER_ACTIVE])
+    if (structure[kFanTimerActive])
     {
-        thermostat.fanTimerActive = [[structure objectForKey:FAN_TIMER_ACTIVE] boolValue];
+        thermostat.fanTimerActive = [structure[kFanTimerActive] boolValue];
 
     }
-    if ([structure objectForKey:NAME_LONG])
+    if (structure[kNameLong])
     {
-        thermostat.nameLong = [structure objectForKey:NAME_LONG];
+        thermostat.nameLong = structure[kNameLong];
+    }
+    if (structure[kHvacMode])
+    {
+        thermostat.hvacMode = structure[kHvacMode];
+    }
+    if (structure[kCanHeat])
+    {
+        thermostat.canHeat = structure[kCanHeat];
+    }
+    if (structure[kCanCool])
+    {
+        thermostat.canCool = structure[kCanCool];
     }
 
     [self.delegate thermostatValuesChanged:thermostat];
@@ -102,15 +117,19 @@
 - (void)saveChangesForThermostat:(Thermostat *)thermostat
 {
     NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+
+    if ([thermostat.temperatureScale isEqualToString:@"F"])
+    {
+        values[kTargetTemperatureF] = [NSNumber numberWithInteger:thermostat.targetTemperatureF];
+    }
+    else if ([thermostat.temperatureScale isEqualToString:@"C"])
+    {
+        values[kTargetTemperatureC] = [NSNumber numberWithFloat:thermostat.targetTemperatureC];
+    }
+    values[kFanTimerActive] = [NSNumber numberWithBool:thermostat.fanTimerActive];
+    values[kHvacMode] = thermostat.hvacMode;
     
-    [values setValue:[NSNumber numberWithInteger:thermostat.targetTemperatureF]
-              forKey:TARGET_TEMPERATURE_F];
-    [values setValue:[NSNumber numberWithFloat:thermostat.targetTemperatureC]
-              forKey:TARGET_TEMPERATURE_C];
-    [values setValue:[NSNumber numberWithBool:thermostat.fanTimerActive]
-              forKey:FAN_TIMER_ACTIVE];
-    
-    [[FirebaseManager sharedManager] setValues:values forURL:[NSString stringWithFormat:@"%@/%@/", THERMOSTAT_PATH, thermostat.thermostatId]];
+    [[FirebaseManager sharedManager] setValues:values forURL:[NSString stringWithFormat:@"%@/%@/", kThermostatsPath, thermostat.thermostatId]];
     NSLog(@"Changes saved");
     
 //    // IMPORTANT to set withLocalEvents to NO
