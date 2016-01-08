@@ -15,18 +15,33 @@
 
 @property (nonatomic, strong) NestThermostatManager *nestThermostatManager;
 @property (nonatomic, strong) Thermostat *currentThermostat;
-@property (nonatomic) BOOL isSlidingSlider;
+
+@property (nonatomic) BOOL isSlidingTargetTempSlider;
+@property (nonatomic) BOOL isSlidingTargetLowTempSlider;
+@property (nonatomic) BOOL isSlidingTargetHighTempSlider;
+
 @property (nonatomic, strong) LoadingView *loadingView;
+
+@property (nonatomic) CGFloat ambientTemp;
+@property (nonatomic) CGFloat targetTemp;
+@property (nonatomic) CGFloat targetTempHigh;
+@property (nonatomic) CGFloat targetTempLow;
+@property (nonatomic) CGFloat minTargetTemp;
+@property (nonatomic) CGFloat maxTargetTemp;
+@property (nonatomic) CGFloat targetTempStep;
+@property (nonatomic) CGFloat lowHighDelta;
 
 @end
 
-NSInteger const kMinTargetTempF = 48;
-NSInteger const kMaxTargetTempF = 90;
-NSInteger const kTargetTempStepF = 1;
+static const NSInteger kMinTargetTempF = 48;
+static const NSInteger kMaxTargetTempF = 90;
+static const NSInteger kTargetTempStepF = 1;
+static const NSInteger kLowHighDeltaF = 3;
 
-CGFloat const kMinTargetTempC = 9.0f;
-CGFloat const kMaxTargetTempC = 32.0f;
-CGFloat const kTargetTempStepC = 0.5f;
+static const CGFloat kMinTargetTempC = 9.0f;
+static const CGFloat kMaxTargetTempC = 32.0f;
+static const CGFloat kTargetTempStepC = 0.5f;
+static const NSInteger kLowHighDeltaC = 1.5f;
 
 @implementation ThermostatDetailsViewController
 
@@ -40,17 +55,20 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self setupCurrentTemperatureValueLabel];
     [self setupFanTimerLabel];
     [self setupFanTimerSwitch];
+
     [self setupHvacModeSegmentedControl];
+
     [self setupTargetTemperatureLabel];
     [self setupTargetTemperatureValueLabel];
     [self setupTargetTemperatureSlider];
+    
     [self setupTargetTempLowCaptionLabel];
     [self setupTargetTempLowValueLabel];
     [self setupTargetTempLowSlider];
+
     [self setupTargetTempHighCaptionLabel];
     [self setupTargetTempHighValueLabel];
     [self setupTargetTempHighSlider];
-
 
     self.loadingView = [[LoadingView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.loadingView];
@@ -64,15 +82,10 @@ CGFloat const kTargetTempStepC = 0.5f;
     self.nestThermostatManager = [[NestThermostatManager alloc] init];
     self.nestThermostatManager.delegate = self;
 
-    [self subscribeToThermostat:self.thermostatItem];
-}
-
-- (void)subscribeToThermostat:(Thermostat *)thermostat
-{
-    if (thermostat)
+    if (self.thermostatItem)
     {
         [self.loadingView showLoading];
-        [self.nestThermostatManager beginSubscriptionForThermostat:thermostat];
+        [self.nestThermostatManager beginSubscriptionForThermostat:self.thermostatItem];
     }
 }
 
@@ -82,7 +95,7 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self saveThermostatChanges];
 }
 
-#pragma mark - NestThermostatManagerDelegate Methods
+#pragma mark - NestThermostatManagerDelegate Method
 
 - (void)thermostatValuesChanged:(Thermostat *)thermostat
 {
@@ -93,31 +106,68 @@ CGFloat const kTargetTempStepC = 0.5f;
     NSLog(thermostat.canCool ? @"can_cool: Yes" : @"can_cool: No");
     NSLog(thermostat.fanTimerActive ? @"fan_timer_active: Yes" : @"fan_timer_active: No");
 
+    [self formatTempByScale:thermostat.temperatureScale];
+
     self.nameLongLabel.text = thermostat.nameLong;
 
-    if ([thermostat.temperatureScale isEqualToString:@"F"])
-    {
-        NSInteger ambientTemperatureF = thermostat.ambientTemperatureF;
-        NSInteger targetTemperatureF  = thermostat.targetTemperatureF;
-        self.currentTempValueLabel.text = [self formatFarenheitTemp:ambientTemperatureF];
-        self.targetTempValueLabel.text = [self formatFarenheitTemp:targetTemperatureF];
-    }
-    else if ([thermostat.temperatureScale isEqualToString:@"C"])
-    {
-        CGFloat ambientTemperatureC = thermostat.ambientTemperatureC;
-        CGFloat targetTemperatureC  = thermostat.targetTemperatureC;
-        self.currentTempValueLabel.text = [self formatCelciumTemp: ambientTemperatureC];
-        self.targetTempValueLabel.text = [self formatCelciumTemp:                                          targetTemperatureC];
-    }
+    self.currentTempValueLabel.text = [self formattedTemp:self.ambientTemp];
 
-    CGFloat sliderValue = [self getSliderValue:thermostat];
-    if (!self.isSlidingSlider)
+    [self initFanControls:thermostat];
+    [self initHvacModeSegmentedControl:thermostat];
+    [self initTargetTempControls:thermostat];
+    [self initTargetTempLowControls:thermostat];
+    [self initTargetTempHighControls:thermostat];
+}
+
+#pragma mark - init controls Method
+
+- (void)initTargetTempControls:(Thermostat *)thermostat
+{
+    self.targetTempValueLabel.text = [self formattedTemp:self.targetTemp];
+
+    CGFloat targetTempSliderValue = [self sliderValueByThermostatTemp:self.targetTemp fromMinTemp:self.minTargetTemp toMaxTemp:self.maxTargetTemp];
+    if (!self.isSlidingTargetTempSlider)
     {
         [UIView animateWithDuration:0.5 animations:^{
-            [self.targetTempSlider setValue:sliderValue animated:YES];
+            [self.targetTempSlider setValue:targetTempSliderValue animated:YES];
         }];
     }
+}
 
+- (void)initTargetTempLowControls:(Thermostat *)thermostat
+{
+    self.targetTempLowValueLabel.text = [self formattedTemp:self.targetTempLow];
+
+    CGFloat targetTempLowSliderValue =
+        [self sliderValueByThermostatTemp:self.targetTempLow
+                              fromMinTemp:self.minTargetTemp
+                                toMaxTemp:self.targetTempHigh - self.lowHighDelta];
+    if (!self.isSlidingTargetLowTempSlider)
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.targetTempLowSlider setValue:targetTempLowSliderValue animated:YES];
+        }];
+    }
+}
+
+- (void)initTargetTempHighControls:(Thermostat *)thermostat
+{
+    self.targetTempHighValueLabel.text = [self formattedTemp:self.targetTempHigh];
+
+    CGFloat targetTempHighSliderValue =
+        [self sliderValueByThermostatTemp:self.targetTempHigh
+                              fromMinTemp:self.targetTempLow + self.lowHighDelta
+                                toMaxTemp:self.maxTargetTemp];
+    if (!self.isSlidingTargetHighTempSlider)
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.targetTempHighSlider setValue:targetTempHighSliderValue animated:YES];
+        }];
+    }
+}
+
+- (void)initFanControls:(Thermostat *)thermostat
+{
     if (thermostat.hasFan)
     {
         self.fanTimerSwitch.enabled = YES;
@@ -137,8 +187,10 @@ CGFloat const kTargetTempStepC = 0.5f;
         self.fanTimerSwitch.enabled = NO;
         self.fanTimerLabel.text = @"Fan is disabled";
     }
+}
 
-
+- (void)initHvacModeSegmentedControl:(Thermostat *)thermostat
+{
     [self.hvacModeSegmentedControl removeAllSegments];
     NSMutableArray *hvacMode = [[NSMutableArray alloc] init];
     if (thermostat.canHeat)
@@ -161,11 +213,53 @@ CGFloat const kTargetTempStepC = 0.5f;
         [self.hvacModeSegmentedControl insertSegmentWithTitle:hvacMode[i] atIndex:i animated:NO];
     }
     self.hvacModeSegmentedControl.selectedSegmentIndex = [hvacMode indexOfObject:thermostat.hvacMode];
+    [self showHideControlsByHvacMode:thermostat.hvacMode];
 }
 
-#pragma mark - Other Methods
+- (void) formatTempByScale:(NSString *)temperatureScale
+{
+    Thermostat *thermostat = self.currentThermostat;
+    if ([temperatureScale isEqualToString:@"F"])
+    {
+        self.ambientTemp = thermostat.ambientTemperatureF;
+        self.targetTemp  = thermostat.targetTemperatureF;
+        self.targetTempHigh = thermostat.targetTemperatureHighF;
+        self.targetTempLow  = thermostat.targetTemperatureLowF;
+        self.maxTargetTemp  = kMaxTargetTempF;
+        self.minTargetTemp  = kMinTargetTempF;
+        self.targetTempStep = kTargetTempStepF;
+        self.lowHighDelta = kLowHighDeltaF;
+    }
+    else if ([temperatureScale isEqualToString:@"C"])
+    {
+        self.ambientTemp = thermostat.ambientTemperatureC;
+        self.targetTemp  = thermostat.targetTemperatureC;
+        self.targetTempHigh = thermostat.targetTemperatureHighC;
+        self.targetTempLow  = thermostat.targetTemperatureLowC;
+        self.maxTargetTemp  = kMaxTargetTempC;
+        self.minTargetTemp  = kMinTargetTempC;
+        self.targetTempStep = kTargetTempStepC;
+        self.lowHighDelta = kLowHighDeltaC;
+    }
+}
 
-- (NSString *)formatCelciumTemp:(CGFloat)temp
+#pragma mark - formatted Methods
+
+- (NSString *)formattedTemp:(CGFloat)temperature
+{
+    Thermostat *thermostat =  self.currentThermostat;
+    if ([thermostat.temperatureScale isEqualToString:@"F"])
+    {
+        return [self formattedFarenheitTemp:temperature];
+    }
+    else if ([thermostat.temperatureScale isEqualToString:@"C"])
+    {
+        return [self formattedCelciumTemp:temperature];
+    }
+    return nil;
+}
+
+- (NSString *)formattedCelciumTemp:(CGFloat)temp
 {
     NSString *celciumTemp = nil;
     CGFloat deltaTemp = fabs(temp - round(temp));
@@ -180,7 +274,7 @@ CGFloat const kTargetTempStepC = 0.5f;
     return celciumTemp;
 }
 
-- (NSString *)formatFarenheitTemp:(NSInteger)temp
+- (NSString *)formattedFarenheitTemp:(NSInteger)temp
 {
     NSString *farenheitTemp = [NSString stringWithFormat:@"%lu", temp];
     return farenheitTemp;
@@ -191,27 +285,39 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self.nestThermostatManager saveChangesForThermostat:self.currentThermostat];
 }
 
+#pragma mark - change slider by thermostat
+
+- (CGFloat)sliderValueByThermostatTemp:(CGFloat)temperature
+                           fromMinTemp:(CGFloat)min
+                             toMaxTemp:(CGFloat)max
+{
+    CGFloat range = max - min;
+    CGFloat offset = temperature - min;
+    return offset / range;
+}
+
+#pragma mark - changes by sliders
+
 - (CGFloat)getValueBySlider:(UISlider *)slider
-                    fromMin:(CGFloat)min
-                      toMax:(CGFloat)max
-                   withStep:(CGFloat)step
+                fromMinTemp:(CGFloat)min
+                  toMaxTemp:(CGFloat)max
 {
     // slider 0 1
     // ||-----|-----||-----|-----||
-    CGFloat delta = step / 2.0;
+    CGFloat delta = self.targetTempStep / 2.0;
     CGFloat currVal = min + (max - min) * slider.value;
     CGFloat roundDown = min - delta;
     CGFloat roundUp   = min + delta;
     CGFloat roundValue = -1.0f;
     for (;;)
     {
-        roundDown += step;
+        roundDown += self.targetTempStep;
         if (roundDown >= currVal)
         {
             roundValue = roundDown - delta;
             break;
         }
-        roundUp += step;
+        roundUp += self.targetTempStep;
         if (roundUp >= currVal)
         {
             roundValue = roundUp - delta;
@@ -221,96 +327,48 @@ CGFloat const kTargetTempStepC = 0.5f;
     return roundValue;
 }
 
-- (void)sliderValueChanged:(UISlider *)sender
+- (void)targetSliderValueChanged:(UISlider *)sender
 {
-    if ([self.currentThermostat.temperatureScale isEqualToString:@"F"])
-    {
-        CGFloat tempF = [self getValueBySlider:sender
-                                       fromMin:kMinTargetTempF
-                                         toMax:kMaxTargetTempF
-                                      withStep:kTargetTempStepF];
-        [self setTempValueLabelForSlider:sender
-                                WithTemp:[self formatFarenheitTemp:tempF]];
-    }
-    else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
-    {
-        CGFloat tempC = [self getValueBySlider:sender
-                                       fromMin:kMinTargetTempC
-                                         toMax:kMaxTargetTempC
-                                      withStep:kTargetTempStepC];
-        [self setTempValueLabelForSlider:sender
-                                WithTemp:[self formatCelciumTemp:tempC]];
-    }
+    CGFloat temp = [self getValueBySlider:sender
+                              fromMinTemp:self.minTargetTemp
+                                toMaxTemp:self.maxTargetTemp];
+    self.targetTempValueLabel.text = [self formattedTemp:temp];
 }
 
-- (void)setTempValueLabelForSlider:(UISlider *)slider
-                          WithTemp:(NSString *)temp
+- (void)sliderLowValueChanged:(UISlider *)sender
 {
-    if (slider.tag == targetSlider)
-    {
-        self.targetTempValueLabel.text = temp;
-    }
-    else if (slider.tag == targetLowSlider)
-    {
-        self.targetTempLowValueLabel.text = temp;
-    }
-    else if (slider.tag == targetLowSlider)
-    {
-        self.targetTempLowValueLabel.text = temp;
-    }
+    CGFloat temp = [self getValueBySlider:sender
+                              fromMinTemp:self.minTargetTemp
+                                toMaxTemp:self.targetTempHigh - self.lowHighDelta];
+    self.targetTempLowValueLabel.text = [self formattedTemp:temp];
 }
 
-- (CGFloat)getValueForSlider:(UISlider *)sender
-              withThermostat:(Thermostat *)thermostat
+- (void)sliderHighValueChanged:(UISlider *)sender
 {
-    CGFloat targetTemp  = -1;
-    CGFloat sliderValue = -1;
-    if ([thermostat.temperatureScale isEqualToString:@"F"])
-    {
-        if (sender.tag == targetSlider)
-        {
-            targetTemp = thermostat.targetTemperatureF;
-        }
-        else if (sender.tag == targetLowSlider)
-        {
-            targetTemp = thermostat.targetTemp;
-        }
-        else if (sender.tag == targetLowSlider)
-        {
-            self.targetTempLowValueLabel.text = temp;
-        }
-
-        sliderValue = [self getSliderValueFromTargetTemp:targetTemp
-                                                 withMin:kMinTargetTempF
-                                                  andMax:kMaxTargetTempF];
-    }
-    else if ([thermostat.temperatureScale isEqualToString:@"C"])
-    {
-        targetTemp = thermostat.targetTemperatureC;
-        sliderValue = [self getSliderValueFromTargetTemp:targetTemp
-                                                 withMin:kMinTargetTempC
-                                                  andMax:kMaxTargetTempC];
-    }
-    return sliderValue;
+    CGFloat temp = [self getValueBySlider:sender
+                              fromMinTemp:self.targetTempLow + self.lowHighDelta
+                                toMaxTemp:self.maxTargetTemp];
+    self.targetTempHighValueLabel.text = [self formattedTemp:temp];
 }
 
-- (CGFloat)getSliderValueFromTargetTemp:(CGFloat)targetTemp
-                                withMin:(CGFloat)min
-                                 andMax:(CGFloat)max
+- (void)targetSliderMoving:(UISlider *)sender
 {
-    CGFloat range = max - min;
-    CGFloat offset = targetTemp - min;
-    return offset / range;
+    self.isSlidingTargetTempSlider = YES;
 }
 
-- (void)sliderMoving:(UISlider *)sender
+- (void)sliderLowMoving:(UISlider *)sender
 {
-    self.isSlidingSlider = YES;
+    self.isSlidingTargetLowTempSlider = YES;
 }
 
-- (void)sliderValueSettled:(UISlider *)sender
+- (void)sliderHighMoving:(UISlider *)sender
 {
-    self.isSlidingSlider = NO;
+    self.isSlidingTargetHighTempSlider = YES;
+}
+
+- (void)targetSliderValueSettled:(UISlider *)sender
+{
+    self.isSlidingTargetTempSlider = NO;
 
     if ([self.currentThermostat.temperatureScale isEqualToString:@"F"])
     {
@@ -323,9 +381,46 @@ CGFloat const kTargetTempStepC = 0.5f;
     [self saveThermostatChanges];
 }
 
+- (void)sliderLowValueSettled:(UISlider *)sender
+{
+    self.isSlidingTargetLowTempSlider = NO;
+
+    if ([self.currentThermostat.temperatureScale isEqualToString:@"F"])
+    {
+        self.currentThermostat.targetTemperatureLowF = [self.targetTempLowValueLabel.text integerValue];
+    }
+    else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
+    {
+        self.currentThermostat.targetTemperatureLowC = [self.targetTempLowValueLabel.text floatValue];
+    }
+    [self saveThermostatChanges];
+}
+
+- (void)sliderHighValueSettled:(UISlider *)sender
+{
+    self.isSlidingTargetHighTempSlider = NO;
+
+    if ([self.currentThermostat.temperatureScale isEqualToString:@"F"])
+    {
+        self.currentThermostat.targetTemperatureHighF = [self.targetTempHighValueLabel.text integerValue];
+    }
+    else if ([self.currentThermostat.temperatureScale isEqualToString:@"C"])
+    {
+        self.currentThermostat.targetTemperatureHighC = [self.targetTempHighValueLabel.text floatValue];
+    }
+    [self saveThermostatChanges];
+}
+
 - (void)toggleControls:(UISegmentedControl *)sender
 {
     NSString *hvacMode = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+    [self showHideControlsByHvacMode:hvacMode];
+    self.currentThermostat.hvacMode = hvacMode;
+    [self saveThermostatChanges];
+}
+
+- (void)showHideControlsByHvacMode:(NSString *)hvacMode
+{
     if ([hvacMode isEqualToString:@"heat"] ||
         [hvacMode isEqualToString:@"cool"])
     {
@@ -369,8 +464,6 @@ CGFloat const kTargetTempStepC = 0.5f;
         self.targetTempHighSlider.hidden = YES;
         self.targetTempHighValueLabel.hidden = YES;
     }
-    self.currentThermostat.hvacMode = hvacMode;
-    [self saveThermostatChanges];
 }
 
 @end

@@ -39,13 +39,23 @@ sliderTag;
 @property (nonatomic, strong) UILabel *targetTempHighValueLabel;
 @property (nonatomic, strong) UISlider *targetTempHighSlider;
 
+
 //@property (nonatomic, strong) UIActivityIndicatorView *activity;
 
 - (void)fanSwitched:(UISwitch *)sender;
-- (void)sliderValueChanged:(UISlider *)sender
-         forTempValueLabel:(UILabel *)tempValueLabel;
-- (void)sliderMoving:(UISlider *)sender;
-- (void)sliderValueSettled:(UISlider *)sender;
+
+- (void)targetSliderValueChanged:(UISlider *)sender;
+- (void)targetSliderMoving:(UISlider *)sender;
+- (void)targetSliderValueSettled:(UISlider *)sender;
+
+- (void)sliderLowValueChanged:(UISlider *)sender;
+- (void)sliderLowMoving:(UISlider *)sender;
+- (void)sliderLowValueSettled:(UISlider *)sender;
+
+- (void)sliderHighValueChanged:(UISlider *)sender;
+- (void)sliderHighMoving:(UISlider *)sender;
+- (void)sliderHighValueSettled:(UISlider *)sender;
+
 
 - (void)toggleControls:(UISegmentedControl *)sender;
 
