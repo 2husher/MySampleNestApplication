@@ -20,13 +20,22 @@
 
 @property (nonatomic, strong) NSString *thermostatId;
 @property (nonatomic, strong) NSString *nameLong;
+
 @property (nonatomic) BOOL hasFan;
-@property (nonatomic) NSString *temperatureScale;
 @property (nonatomic) BOOL fanTimerActive;
+
+@property (nonatomic) NSString *temperatureScale;
+
 @property (nonatomic) NSInteger ambientTemperatureF;
 @property (nonatomic) NSInteger targetTemperatureF;
 @property (nonatomic) CGFloat ambientTemperatureC;
 @property (nonatomic) CGFloat targetTemperatureC;
+
+@property (nonatomic) NSInteger targetTemperatureHighF;
+@property (nonatomic) NSInteger targetTemperatureLowF;
+@property (nonatomic) CGFloat targetTemperatureHighC;
+@property (nonatomic) CGFloat targetTemperatureLowC;
+
 @property (nonatomic, strong) NSString *hvacMode;
 @property (nonatomic) BOOL canHeat;
 @property (nonatomic) BOOL canCool;
