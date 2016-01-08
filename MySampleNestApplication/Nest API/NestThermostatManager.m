@@ -31,6 +31,11 @@ static NSString *const kAmbientTemperatureF = @"ambient_temperature_f";
 static NSString *const kTargetTemperatureC = @"target_temperature_c";
 static NSString *const kAmbientTemperatureC = @"ambient_temperature_c";
 
+static NSString *const kTargetTemperatureHighF = @"target_temperature_high_f";
+static NSString *const kTargetTemperatureLowF = @"target_temperature_low_f";
+static NSString *const kTargetTemperatureHighC = @"target_temperature_high_c";
+static NSString *const kTargetTemperatureLowC = @"target_temperature_low_c";
+
 static NSString *const kNameLong = @"name_long";
 static NSString *const kTemperatureScale = @"temperature_scale";
 static NSString *const kHvacMode = @"hvac_mode";
@@ -59,50 +64,56 @@ static NSString *const kCanCool = @"can_cool";
  */
 - (void)updateThermostat:(Thermostat *)thermostat forStructure:(NSDictionary *)structure
 {
-    if (structure[kTemperatureScale])
-    {
+    if (structure[kTemperatureScale]){
         thermostat.temperatureScale = structure[kTemperatureScale];
     }
-    if (structure[kAmbientTemperatureF])
+    if ([thermostat.temperatureScale isEqualToString:@"F"])
     {
-        thermostat.ambientTemperatureF = [structure[kAmbientTemperatureF] integerValue];
+        if (structure[kAmbientTemperatureF]){
+            thermostat.ambientTemperatureF = [structure[kAmbientTemperatureF] integerValue];
+        }
+        if (structure[kTargetTemperatureF]){
+            thermostat.targetTemperatureF = [structure[kTargetTemperatureF]integerValue];
+        }
+        if (structure[kTargetTemperatureHighF]){
+            thermostat.targetTemperatureHighF = [structure[kTargetTemperatureHighF] integerValue];
+        }
+        if (structure[kTargetTemperatureLowF]){
+            thermostat.targetTemperatureLowF = [structure[kTargetTemperatureLowF]integerValue];
+        }
     }
-    if (structure[kTargetTemperatureF])
+    if ([thermostat.temperatureScale isEqualToString:@"C"])
     {
-        thermostat.targetTemperatureF = [structure[kTargetTemperatureF]integerValue];
+        if (structure[kAmbientTemperatureC]){
+            thermostat.ambientTemperatureC = [structure[kAmbientTemperatureC] floatValue];
+        }
+        if (structure[kTargetTemperatureC]){
+            thermostat.targetTemperatureC = [structure[kTargetTemperatureC] floatValue];
+        }
+        if (structure[kTargetTemperatureHighC]){
+            thermostat.targetTemperatureHighC = [structure[kTargetTemperatureHighC] floatValue];
+        }
+        if (structure[kTargetTemperatureLowC]){
+            thermostat.targetTemperatureLowC = [structure[kTargetTemperatureLowC]floatValue];
+        }
     }
-    if (structure[kAmbientTemperatureC])
-    {
-        thermostat.ambientTemperatureC = [structure[kAmbientTemperatureC] floatValue];
-    }
-    if (structure[kTargetTemperatureC])
-    {
-        thermostat.targetTemperatureC = [structure[kTargetTemperatureC] floatValue];
-    }
-    if (structure[kHasFan])
-    {
+    if (structure[kHasFan]){
         thermostat.hasFan = [structure[kHasFan] boolValue];
-
     }
-    if (structure[kFanTimerActive])
-    {
+    if (structure[kFanTimerActive]){
         thermostat.fanTimerActive = [structure[kFanTimerActive] boolValue];
-
     }
-    if (structure[kNameLong])
-    {
+    if (structure[kNameLong]){
         thermostat.nameLong = structure[kNameLong];
     }
     if (structure[kHvacMode])
     {
         thermostat.hvacMode = structure[kHvacMode];
     }
-    if (structure[kCanHeat])
-    {
+    if (structure[kCanHeat]){
         thermostat.canHeat = structure[kCanHeat];
     }
-    if (structure[kCanCool])
-    {
+    if (structure[kCanCool]){
         thermostat.canCool = structure[kCanCool];
     }
 
@@ -121,10 +132,14 @@ static NSString *const kCanCool = @"can_cool";
     if ([thermostat.temperatureScale isEqualToString:@"F"])
     {
         values[kTargetTemperatureF] = [NSNumber numberWithInteger:thermostat.targetTemperatureF];
+        values[kTargetTemperatureLowF] = [NSNumber numberWithInteger:thermostat.targetTemperatureLowF];
+        values[kTargetTemperatureHighF] = [NSNumber numberWithInteger:thermostat.targetTemperatureHighF];
     }
     else if ([thermostat.temperatureScale isEqualToString:@"C"])
     {
         values[kTargetTemperatureC] = [NSNumber numberWithFloat:thermostat.targetTemperatureC];
+        values[kTargetTemperatureLowC] = [NSNumber numberWithFloat:thermostat.targetTemperatureLowC];
+        values[kTargetTemperatureHighC] = [NSNumber numberWithFloat:thermostat.targetTemperatureHighC];
     }
     values[kFanTimerActive] = [NSNumber numberWithBool:thermostat.fanTimerActive];
     values[kHvacMode] = thermostat.hvacMode;
