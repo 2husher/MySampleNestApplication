@@ -203,13 +203,13 @@
     self.targetTempSlider.maximumValue = 1.0f;
 
     [self.targetTempSlider addTarget:self
-                              action:@selector(sliderValueChanged:)
+                              action:@selector(targetSliderValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
     [self.targetTempSlider addTarget:self
-                              action:@selector(sliderMoving:)
+                              action:@selector(targetSliderMoving:)
                     forControlEvents:UIControlEventTouchDown];
     [self.targetTempSlider addTarget:self
-                              action:@selector(sliderValueSettled:)
+                              action:@selector(targetSliderValueSettled:)
                     forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.targetTempSlider];
 
@@ -284,10 +284,10 @@
     self.targetTempLowSlider.maximumValue = 1.0f;
 
     [self.targetTempLowSlider addTarget:self
-                              action:@selector(sliderValueChanged:)
+                              action:@selector(sliderLowValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
     [self.targetTempLowSlider addTarget:self
-                              action:@selector(sliderMoving:)
+                              action:@selector(sliderLowMoving:)
                     forControlEvents:UIControlEventTouchDown];
     [self.targetTempLowSlider addTarget:self
                               action:@selector(sliderLowValueSettled:)
