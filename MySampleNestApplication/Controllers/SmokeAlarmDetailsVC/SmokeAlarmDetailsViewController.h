@@ -13,7 +13,7 @@
 @interface SmokeAlarmDetailsViewController : UIViewController
 
 @property (nonatomic, strong) SmokeCoAlarm *smokeAlarmItem;
-@property (nonatomic, strong) UILabel *nameLongLabel;
+@property (nonatomic, strong) UILabel *nameLongCaption;
 @property (nonatomic, strong) UILabel *batteryHealthCaption;
 @property (nonatomic, strong) UILabel *batteryHealthValue;
 

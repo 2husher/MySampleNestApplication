@@ -11,22 +11,22 @@
 @interface ThermostatDetailsViewController (UIControls)
 
 - (void)setupNameLongLabel;
-- (void)setupCurrentTemperatureLabel;
-- (void)setupCurrentTemperatureValueLabel;
+- (void)setupCurrentTempCaption;
+- (void)setupCurrentTempValue;
 - (void)setupFanTimerLabel;
 - (void)setupFanTimerSwitch;
 - (void)setupHvacModeSegmentedControl;
 
-- (void)setupTargetTemperatureLabel;
-- (void)setupTargetTemperatureValueLabel;
-- (void)setupTargetTemperatureSlider;
+- (void)setupTargetTempCaption;
+- (void)setupTargetTempValue;
+- (void)setupTargetTempSlider;
 
-- (void)setupTargetTempLowCaptionLabel;
-- (void)setupTargetTempLowValueLabel;
-- (void)setupTargetTempLowSlider;
+- (void)setupLowTempCaption;
+- (void)setupLowTempValue;
+- (void)setupLowTempSlider;
 
-- (void)setupTargetTempHighCaptionLabel;
-- (void)setupTargetTempHighValueLabel;
-- (void)setupTargetTempHighSlider;
+- (void)setupHighTempCaption;
+- (void)setupHighTempValue;
+- (void)setupHighTempSlider;
 
 @end

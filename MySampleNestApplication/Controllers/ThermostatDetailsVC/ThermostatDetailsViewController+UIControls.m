@@ -12,22 +12,22 @@
 
 - (void)setupNameLongLabel
 {
-    self.nameLongLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.nameLongLabel.text = @"Thermostat name";
-    [self.nameLongLabel sizeToFit];
-    [self.view addSubview:self.nameLongLabel];
+    self.nameLongCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.nameLongCaption.text = @"Thermostat name";
+    [self.nameLongCaption sizeToFit];
+    [self.view addSubview:self.nameLongCaption];
 
-    self.nameLongLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.nameLongCaption.translatesAutoresizingMaskIntoConstraints = NO;
     id topGuide = self.topLayoutGuide;
     NSDictionary *nameMap = @{ @"topGuide" : topGuide,
-                               @"nameLongLabel" : self.nameLongLabel };
+                               @"nameLongCaption" : self.nameLongCaption };
     NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-[nameLongLabel]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-[nameLongCaption]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
     NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLongLabel]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLongCaption]-|"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
@@ -35,18 +35,18 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupCurrentTemperatureLabel
+- (void)setupCurrentTempCaption
 {
-    self.currentTempLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.currentTempLabel.text = @"Current temperature";
-    [self.currentTempLabel sizeToFit];
-    [self.view addSubview:self.currentTempLabel];
+    self.currentTempCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.currentTempCaption.text = @"Current temperature";
+    [self.currentTempCaption sizeToFit];
+    [self.view addSubview:self.currentTempCaption];
 
-    self.currentTempLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"nameLongLabel" : self.nameLongLabel,
-                               @"currentTemp" : self.currentTempLabel};
+    self.currentTempCaption.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"nameLongCaption" : self.nameLongCaption,
+                               @"currentTemp" : self.currentTempCaption};
     NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongLabel]-[currentTemp]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongCaption]-[currentTemp]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
@@ -59,16 +59,16 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupCurrentTemperatureValueLabel
+- (void)setupCurrentTempValue
 {
-    self.currentTempValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.currentTempValueLabel.text = @"XXXX";
-    [self.currentTempValueLabel sizeToFit];
-    [self.view addSubview:self.currentTempValueLabel];
+    self.currentTempValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.currentTempValue.text = @"XXXX";
+    [self.currentTempValue sizeToFit];
+    [self.view addSubview:self.currentTempValue];
 
-    self.currentTempValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"currentTemp" : self.currentTempLabel,
-                               @"currentTempVal" : self.currentTempValueLabel };
+    self.currentTempValue.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"currentTemp" : self.currentTempCaption,
+                               @"currentTempVal" : self.currentTempValue };
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTemp]-[currentTempVal]"
                                             options:0
@@ -92,7 +92,7 @@
 
     self.fanTimerLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *nameMap = @{ @"fanTimer" : self.fanTimerLabel,
-                               @"currentTempVal" : self.currentTempValueLabel };
+                               @"currentTempVal" : self.currentTempValue };
     NSArray *verticalLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTempVal]-[fanTimer]"
                                             options:0
@@ -154,15 +154,15 @@
     [self.view addConstraints:verticalLabelConstraints];
 }
 
-- (void)setupTargetTemperatureLabel
+- (void)setupTargetTempCaption
 {
-    self.targetTempLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempLabel.text = @"Target temperature";
-    [self.targetTempLabel sizeToFit];
-    [self.view addSubview:self.targetTempLabel];
+    self.targetTempCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.targetTempCaption.text = @"Target temperature";
+    [self.targetTempCaption sizeToFit];
+    [self.view addSubview:self.targetTempCaption];
 
-    self.targetTempLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempLabel,
+    self.targetTempCaption.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempCaption,
                                @"hvacMode" : self.hvacModeSegmentedControl};
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[hvacMode]-[targetTemp]"
@@ -178,16 +178,16 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupTargetTemperatureValueLabel
+- (void)setupTargetTempValue
 {
-    self.targetTempValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempValueLabel.text = @"YYYY";
-    [self.targetTempValueLabel sizeToFit];
-    [self.view addSubview:self.targetTempValueLabel];
+    self.targetTempValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.targetTempValue.text = @"YYYY";
+    [self.targetTempValue sizeToFit];
+    [self.view addSubview:self.targetTempValue];
 
-    self.targetTempValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempLabel,
-                               @"targetTempVal" : self.targetTempValueLabel };
+    self.targetTempValue.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempCaption,
+                               @"targetTempVal" : self.targetTempValue };
     NSArray *verticalLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[targetTemp]-[targetTempVal]"
                                             options:0
@@ -196,33 +196,33 @@
     [self.view addConstraints:verticalLabelConstraints];
 }
 
-- (void)setupTargetTemperatureSlider
+- (void)setupTargetTempSlider
 {
     self.targetTempSlider = [[UISlider alloc] initWithFrame:CGRectZero];
     self.targetTempSlider.minimumValue = 0.0f;
     self.targetTempSlider.maximumValue = 1.0f;
 
     [self.targetTempSlider addTarget:self
-                              action:@selector(targetSliderValueChanged:)
+                              action:@selector(targetTempSliderValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
     [self.targetTempSlider addTarget:self
-                              action:@selector(targetSliderMoving:)
+                              action:@selector(targetTempSliderMoving:)
                     forControlEvents:UIControlEventTouchDown];
     [self.targetTempSlider addTarget:self
-                              action:@selector(targetSliderValueSettled:)
+                              action:@selector(targetTempSliderValueSettled:)
                     forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.targetTempSlider];
 
     self.targetTempSlider.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempLabel,
-                               @"targetTempVal" : self.targetTempValueLabel,
+    NSDictionary *nameMap = @{ @"targetTemp" : self.targetTempCaption,
+                               @"targetTempVal" : self.targetTempValue,
                                @"targetSlider" : self.targetTempSlider };
-    NSDictionary *metrics = @{ @"labelWidth" : @(self.targetTempValueLabel.frame.size.width) };
+    NSDictionary *metrics = @{ @"labelWidth" : @(self.targetTempValue.frame.size.width) };
     NSLayoutConstraint *verticalSliderConstraints =
     [NSLayoutConstraint constraintWithItem:self.targetTempSlider
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
-                                    toItem:self.targetTempValueLabel
+                                    toItem:self.targetTempValue
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0f
                                   constant:0.0f];
@@ -235,15 +235,15 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupTargetTempLowCaptionLabel
+- (void)setupLowTempCaption
 {
-    self.targetTempLowCaptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempLowCaptionLabel.text = @"Target temperature low";
-    [self.targetTempLowCaptionLabel sizeToFit];
-    [self.view addSubview:self.targetTempLowCaptionLabel];
+    self.lowTempCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.lowTempCaption.text = @"Target temperature low";
+    [self.lowTempCaption sizeToFit];
+    [self.view addSubview:self.lowTempCaption];
 
-    self.targetTempLowCaptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempCaption" : self.targetTempLowCaptionLabel,
+    self.lowTempCaption.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempCaption" : self.lowTempCaption,
                                @"hvacMode" : self.hvacModeSegmentedControl};
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[hvacMode]-[targetTempCaption]"
@@ -259,16 +259,16 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupTargetTempLowValueLabel
+- (void)setupLowTempValue
 {
-    self.targetTempLowValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempLowValueLabel.text = @"YYYY";
-    [self.targetTempLowValueLabel sizeToFit];
-    [self.view addSubview:self.targetTempLowValueLabel];
+    self.lowTempValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.lowTempValue.text = @"YYYY";
+    [self.lowTempValue sizeToFit];
+    [self.view addSubview:self.lowTempValue];
 
-    self.targetTempLowValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempCaption" : self.targetTempLowCaptionLabel,
-                               @"targetTempVal" : self.targetTempLowValueLabel };
+    self.lowTempValue.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempCaption" : self.lowTempCaption,
+                               @"targetTempVal" : self.lowTempValue };
     NSArray *verticalLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[targetTempCaption]-[targetTempVal]"
                                             options:0
@@ -277,32 +277,32 @@
     [self.view addConstraints:verticalLabelConstraints];
 }
 
-- (void)setupTargetTempLowSlider
+- (void)setupLowTempSlider
 {
-    self.targetTempLowSlider = [[UISlider alloc] initWithFrame:CGRectZero];
-    self.targetTempLowSlider.minimumValue = 0.0f;
-    self.targetTempLowSlider.maximumValue = 1.0f;
+    self.lowTempSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+    self.lowTempSlider.minimumValue = 0.0f;
+    self.lowTempSlider.maximumValue = 1.0f;
 
-    [self.targetTempLowSlider addTarget:self
-                              action:@selector(sliderLowValueChanged:)
-                    forControlEvents:UIControlEventValueChanged];
-    [self.targetTempLowSlider addTarget:self
-                              action:@selector(sliderLowMoving:)
-                    forControlEvents:UIControlEventTouchDown];
-    [self.targetTempLowSlider addTarget:self
-                              action:@selector(sliderLowValueSettled:)
-                    forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.targetTempLowSlider];
+    [self.lowTempSlider addTarget:self
+                           action:@selector(lowTempSliderValueChanged:)
+                 forControlEvents:UIControlEventValueChanged];
+    [self.lowTempSlider addTarget:self
+                           action:@selector(lowTempSliderMoving:)
+                 forControlEvents:UIControlEventTouchDown];
+    [self.lowTempSlider addTarget:self
+                           action:@selector(lowTempSliderValueSettled:)
+                 forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.lowTempSlider];
 
-    self.targetTempLowSlider.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempVal" : self.targetTempLowValueLabel,
-                               @"targetSlider" : self.targetTempLowSlider };
-    NSDictionary *metrics = @{ @"labelWidth" : @(self.targetTempLowValueLabel.frame.size.width) };
+    self.lowTempSlider.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempVal" : self.lowTempValue,
+                               @"targetSlider" : self.lowTempSlider };
+    NSDictionary *metrics = @{ @"labelWidth" : @(self.lowTempValue.frame.size.width) };
     NSLayoutConstraint *verticalSliderConstraints =
-    [NSLayoutConstraint constraintWithItem:self.targetTempLowSlider
+    [NSLayoutConstraint constraintWithItem:self.lowTempSlider
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
-                                    toItem:self.targetTempLowValueLabel
+                                    toItem:self.lowTempValue
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0f
                                   constant:0.0f];
@@ -315,16 +315,16 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupTargetTempHighCaptionLabel
+- (void)setupHighTempCaption
 {
-    self.targetTempHighCaptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempHighCaptionLabel.text = @"Target temperature high";
-    [self.targetTempHighCaptionLabel sizeToFit];
-    [self.view addSubview:self.targetTempHighCaptionLabel];
+    self.highTempCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.highTempCaption.text = @"Target temperature high";
+    [self.highTempCaption sizeToFit];
+    [self.view addSubview:self.highTempCaption];
 
-    self.targetTempHighCaptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempLowVal" : self.targetTempLowValueLabel,
-                               @"targetTempHighCaption" : self.targetTempHighCaptionLabel };
+    self.highTempCaption.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempLowVal" : self.lowTempValue,
+                               @"targetTempHighCaption" : self.highTempCaption };
     NSArray *verticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[targetTempLowVal]-[targetTempHighCaption]"
                                             options:0
@@ -339,16 +339,16 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)setupTargetTempHighValueLabel
+- (void)setupHighTempValue
 {
-    self.targetTempHighValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.targetTempHighValueLabel.text = @"YYYY";
-    [self.targetTempHighValueLabel sizeToFit];
-    [self.view addSubview:self.targetTempHighValueLabel];
+    self.highTempValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.highTempValue.text = @"YYYY";
+    [self.highTempValue sizeToFit];
+    [self.view addSubview:self.highTempValue];
 
-    self.targetTempHighValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempCaption" : self.targetTempHighCaptionLabel,
-                               @"targetTempVal" : self.targetTempHighValueLabel };
+    self.highTempValue.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempCaption" : self.highTempCaption,
+                               @"targetTempVal" : self.highTempValue };
     NSArray *verticalLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[targetTempCaption]-[targetTempVal]"
                                             options:0
@@ -357,32 +357,32 @@
     [self.view addConstraints:verticalLabelConstraints];
 }
 
-- (void)setupTargetTempHighSlider
+- (void)setupHighTempSlider
 {
-    self.targetTempHighSlider = [[UISlider alloc] initWithFrame:CGRectZero];
-    self.targetTempHighSlider.minimumValue = 0.0f;
-    self.targetTempHighSlider.maximumValue = 1.0f;
+    self.highTempSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+    self.highTempSlider.minimumValue = 0.0f;
+    self.highTempSlider.maximumValue = 1.0f;
 
-    [self.targetTempHighSlider addTarget:self
-                                 action:@selector(sliderHighValueChanged:)
-                       forControlEvents:UIControlEventValueChanged];
-    [self.targetTempHighSlider addTarget:self
-                                 action:@selector(sliderHighMoving:)
-                       forControlEvents:UIControlEventTouchDown];
-    [self.targetTempHighSlider addTarget:self
-                                 action:@selector(sliderHighValueSettled:)
-                       forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.targetTempHighSlider];
+    [self.highTempSlider addTarget:self
+                            action:@selector(highTempSliderValueChanged:)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.highTempSlider addTarget:self
+                            action:@selector(highTempSliderMoving:)
+                  forControlEvents:UIControlEventTouchDown];
+    [self.highTempSlider addTarget:self
+                            action:@selector(highTempSliderValueSettled:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.highTempSlider];
 
-    self.targetTempHighSlider.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"targetTempVal" : self.targetTempHighValueLabel,
-                               @"targetSlider" : self.targetTempHighSlider };
-    NSDictionary *metrics = @{ @"labelWidth" : @(self.targetTempHighValueLabel.frame.size.width) };
+    self.highTempSlider.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"targetTempVal" : self.highTempValue,
+                               @"targetSlider" : self.highTempSlider };
+    NSDictionary *metrics = @{ @"labelWidth" : @(self.highTempValue.frame.size.width) };
     NSLayoutConstraint *verticalSliderConstraints =
-    [NSLayoutConstraint constraintWithItem:self.targetTempHighSlider
+    [NSLayoutConstraint constraintWithItem:self.highTempSlider
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
-                                    toItem:self.targetTempHighValueLabel
+                                    toItem:self.highTempValue
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0f
                                   constant:0.0f];

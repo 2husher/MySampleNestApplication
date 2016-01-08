@@ -52,7 +52,7 @@
 {
     [self.loadingView hideLoading];
 
-    self.nameLongLabel.text = smokeCoAlarm.nameLong;
+    self.nameLongCaption.text = smokeCoAlarm.nameLong;
     self.batteryHealthValue.text = smokeCoAlarm.batteryHealth;
 }
 

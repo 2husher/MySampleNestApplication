@@ -12,22 +12,22 @@
 
 - (void)setupNameLongLabel
 {
-    self.nameLongLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.nameLongLabel.text = @"Smoke CO alarm name";
-    [self.nameLongLabel sizeToFit];
-    [self.view addSubview:self.nameLongLabel];
+    self.nameLongCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.nameLongCaption.text = @"Smoke CO alarm name";
+    [self.nameLongCaption sizeToFit];
+    [self.view addSubview:self.nameLongCaption];
 
-    self.nameLongLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.nameLongCaption.translatesAutoresizingMaskIntoConstraints = NO;
     id topGuide = self.topLayoutGuide;
     NSDictionary *nameMap = @{ @"topGuide" : topGuide,
-                               @"nameLongLabel" : self.nameLongLabel };
+                               @"nameLongCaption" : self.nameLongCaption };
     NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-50-[nameLongLabel]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-50-[nameLongCaption]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
     NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLongLabel]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLongCaption]-|"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
@@ -43,10 +43,10 @@
     [self.view addSubview:self.batteryHealthCaption];
 
     self.batteryHealthCaption.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"nameLongLabel" : self.nameLongLabel,
+    NSDictionary *nameMap = @{ @"nameLongCaption" : self.nameLongCaption,
                                @"batteryHealthCaption" : self.batteryHealthCaption };
     NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongLabel]-50-[batteryHealthCaption]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongCaption]-50-[batteryHealthCaption]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
