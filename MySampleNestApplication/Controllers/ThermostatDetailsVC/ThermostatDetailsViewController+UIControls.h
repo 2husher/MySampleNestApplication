@@ -11,10 +11,16 @@
 @interface ThermostatDetailsViewController (UIControls)
 
 - (void)setupNameLongLabel;
+
+- (void)setupTempScaleCaption;
+- (void)setupTempScaleValue;
+
 - (void)setupCurrentTempCaption;
 - (void)setupCurrentTempValue;
+
 - (void)setupFanTimerLabel;
 - (void)setupFanTimerSwitch;
+
 - (void)setupHvacModeSegmentedControl;
 
 - (void)setupTargetTempCaption;

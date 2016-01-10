@@ -33,7 +33,7 @@
 
 @end
 
-static const NSInteger kMinTempF = 48;
+static const NSInteger kMinTempF = 50;
 static const NSInteger kMaxTempF = 90;
 static const NSInteger kTempStepF = 1;
 static const NSInteger kDiffLowHighTempF = 3;
@@ -41,7 +41,7 @@ static const NSInteger kDiffLowHighTempF = 3;
 static const CGFloat kMinTempC = 9.0f;
 static const CGFloat kMaxTempC = 32.0f;
 static const CGFloat kTempStepC = 0.5f;
-static const NSInteger kDiffLowHighTempC = 1.5f;
+static const CGFloat kDiffLowHighTempC = 1.5f;
 
 @implementation ThermostatDetailsViewController
 
@@ -51,8 +51,13 @@ static const NSInteger kDiffLowHighTempC = 1.5f;
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
     [self setupNameLongLabel];
+
+    [self setupTempScaleCaption];
+    [self setupTempScaleValue];
+
     [self setupCurrentTempCaption];
     [self setupCurrentTempValue];
+
     [self setupFanTimerLabel];
     [self setupFanTimerSwitch];
 
@@ -109,7 +114,7 @@ static const NSInteger kDiffLowHighTempC = 1.5f;
     [self formatTempByScale:thermostat.temperatureScale];
 
     self.nameLongCaption.text = thermostat.nameLong;
-
+    self.tempScaleValue.text = thermostat.temperatureScale;
     self.currentTempValue.text = [self formattedTemp:self.ambientTemp];
 
     [self initFanControls];
@@ -294,6 +299,8 @@ static const NSInteger kDiffLowHighTempC = 1.5f;
                              toMaxTemp:(CGFloat)max
 {
     CGFloat range = max - min;
+    if (range == 0)
+        return 0.5f;
     CGFloat offset = temperature - min;
     return offset / range;
 }

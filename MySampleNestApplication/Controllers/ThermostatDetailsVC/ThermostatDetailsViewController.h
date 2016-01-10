@@ -15,8 +15,13 @@
 @property(strong, nonatomic) Thermostat *thermostatItem;
 
 @property (nonatomic, strong) UILabel *nameLongCaption;
+
+@property (nonatomic, strong) UILabel *tempScaleCaption;
+@property (nonatomic, strong) UILabel *tempScaleValue;
+
 @property (nonatomic, strong) UILabel *currentTempCaption;
 @property (nonatomic, strong) UILabel *currentTempValue;
+
 @property (nonatomic, strong) UILabel *fanTimerLabel;
 @property (nonatomic, strong) UISwitch *fanTimerSwitch;
 

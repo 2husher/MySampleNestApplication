@@ -35,6 +35,52 @@
     [self.view addConstraints:horizontalConstraints];
 }
 
+- (void)setupTempScaleCaption
+{
+    self.tempScaleCaption = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.tempScaleCaption.text = @"Temperature scale";
+    [self.tempScaleCaption sizeToFit];
+    [self.view addSubview:self.tempScaleCaption];
+
+    self.tempScaleCaption.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"nameLongCaption" : self.nameLongCaption,
+                               @"tempScaleCaption" : self.tempScaleCaption};
+    NSArray *verticalConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongCaption]-[tempScaleCaption]"
+                                            options:0
+                                            metrics:nil
+                                              views:nameMap];
+    [self.view addConstraints:verticalConstraints];
+}
+
+- (void)setupTempScaleValue
+{
+    self.tempScaleValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.tempScaleValue.text = @"X";
+    [self.tempScaleValue sizeToFit];
+    [self.view addSubview:self.tempScaleValue];
+
+    [self.tempScaleValue setContentHuggingPriority:500.0f forAxis:UILayoutConstraintAxisHorizontal];
+    self.tempScaleValue.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *nameMap = @{ @"tempScaleCaption" : self.tempScaleCaption,
+                               @"tempScaleValue" : self.tempScaleValue };
+    NSLayoutConstraint *verticalConstraints =
+    [NSLayoutConstraint constraintWithItem:self.tempScaleValue
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.tempScaleCaption
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0f
+                                  constant:0.0f];
+    NSArray *horizontalConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tempScaleCaption]-[tempScaleValue]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:nameMap];
+    [self.view addConstraints:@[verticalConstraints]];
+    [self.view addConstraints:horizontalConstraints];
+}
+
 - (void)setupCurrentTempCaption
 {
     self.currentTempCaption = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -43,20 +89,14 @@
     [self.view addSubview:self.currentTempCaption];
 
     self.currentTempCaption.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *nameMap = @{ @"nameLongCaption" : self.nameLongCaption,
+    NSDictionary *nameMap = @{ @"tempScaleValue" : self.tempScaleValue,
                                @"currentTemp" : self.currentTempCaption};
     NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameLongCaption]-[currentTemp]"
-                                            options:0
-                                            metrics:nil
-                                              views:nameMap];
-    NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[currentTemp]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[tempScaleValue]-[currentTemp]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
     [self.view addConstraints:verticalConstraints];
-    [self.view addConstraints:horizontalConstraints];
 }
 
 - (void)setupCurrentTempValue
@@ -66,20 +106,24 @@
     [self.currentTempValue sizeToFit];
     [self.view addSubview:self.currentTempValue];
 
+    [self.currentTempValue setContentHuggingPriority:300.0f forAxis:UILayoutConstraintAxisHorizontal];
     self.currentTempValue.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *nameMap = @{ @"currentTemp" : self.currentTempCaption,
                                @"currentTempVal" : self.currentTempValue };
-    NSArray *verticalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTemp]-[currentTempVal]"
-                                            options:0
-                                            metrics:nil
-                                              views:nameMap];
+    NSLayoutConstraint *verticalConstraints =
+    [NSLayoutConstraint constraintWithItem:self.currentTempValue
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.currentTempCaption
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0f
+                                  constant:0.0f];
     NSArray *horizontalConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[currentTempVal]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[currentTemp]-[currentTempVal]-|"
                                             options:0
                                             metrics:nil
                                               views:nameMap];
-    [self.view addConstraints:verticalConstraints];
+    [self.view addConstraints:@[verticalConstraints]];
     [self.view addConstraints:horizontalConstraints];
 }
 
@@ -92,9 +136,9 @@
 
     self.fanTimerLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *nameMap = @{ @"fanTimer" : self.fanTimerLabel,
-                               @"currentTempVal" : self.currentTempValue };
+                               @"currentTemp" : self.currentTempCaption, };
     NSArray *verticalLabelConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTempVal]-[fanTimer]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[currentTemp]-[fanTimer]"
                                             options:0
                                             metrics:nil
                                               views:nameMap];

@@ -145,7 +145,6 @@ static NSString *const kCanCool = @"can_cool";
     values[kHvacMode] = thermostat.hvacMode;
     
     [[FirebaseManager sharedManager] setValues:values forURL:[NSString stringWithFormat:@"%@/%@/", kThermostatsPath, thermostat.thermostatId]];
-    NSLog(@"Changes saved");
     
 //    // IMPORTANT to set withLocalEvents to NO
 //    // Read more here: https://www.firebase.com/docs/transactions.html
